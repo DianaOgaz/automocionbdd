@@ -1,27 +1,35 @@
 
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 
 public class Menu extends javax.swing.JFrame {
-    
+
     datosProveedores datosProv = new datosProveedores();
-    Connection con = conexion();
-    
- 
+
+    //ventanas
+    NuevoProveedor nProveedor = new NuevoProveedor();
+    Proveedores vProveedores = new Proveedores();
+
     public Menu() {
         initComponents();
-            this.setVisible(true);
-            this.setResizable(true);
+        conexion();
+        mostrarDatos();
+        this.setVisible(true);
+        this.setResizable(true);
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(Color.GRAY);
+        
     }
-    
-     public Connection conexion() {
+
+    public Connection conexion() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306","root","root");
-
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
             System.out.println("Conexion lograda");
         } catch (SQLException ex) {
             System.out.println("Conexion fallida " + ex);
@@ -29,7 +37,44 @@ public class Menu extends javax.swing.JFrame {
         return con;
 
     }
-    
+
+    public void mostrarDatos() {
+        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        tMenu.setModel(modelo);
+
+        Connection con = conexion();
+
+        Statement st;
+        ResultSet rs;
+
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("SELECT * FROM proveedores");
+
+            while (rs.next()) {
+                String[] datos = new String[10];
+                datos[0] = rs.getString("nombreCorp");
+                datos[1] = rs.getString("estado");
+                datos[2] = rs.getString("calle");
+                datos[3] = rs.getString("colonia");
+                datos[4] = rs.getString("cp");
+                datos[5] = rs.getString("rfc");
+                datos[6] = rs.getString("curp");
+                datos[7] = rs.getString("telefono");
+                datos[8] = rs.getString("celular");
+                datos[9] = rs.getString("notas");
+
+                modelo.addRow(datos);
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("mostrarDatos = " + ex);
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -37,9 +82,9 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        tMenu = new javax.swing.JTable();
+        btnSelecionar = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,28 +94,25 @@ public class Menu extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Proveedores Registrados");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        tMenu.setAutoCreateRowSorter(true);
+        tMenu.setBackground(new java.awt.Color(204, 204, 204));
+        tMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setViewportView(tMenu);
 
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton2.setText("Seleccionar Proveedor");
-
-        jButton3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton3.setText("Agregar Nuevo Proveedor");
-        jButton3.setActionCommand("");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnSelecionar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnSelecionar.setText("Seleccionar Proveedor");
+        btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnSelecionarActionPerformed(evt);
+            }
+        });
+
+        btnAgregar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnAgregar.setText("Agregar Nuevo Proveedor");
+        btnAgregar.setActionCommand("");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
             }
         });
 
@@ -84,12 +126,12 @@ public class Menu extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(207, 207, 207)
                         .addComponent(jLabel1)
-                        .addGap(0, 213, Short.MAX_VALUE))
+                        .addGap(0, 486, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -97,11 +139,11 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(btnAgregar)
+                    .addComponent(btnSelecionar))
                 .addContainerGap())
         );
 
@@ -125,9 +167,13 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        nProveedor.setVisible(true);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
+        vProveedores.setVisible(true);
+    }//GEN-LAST:event_btnSelecionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,11 +212,11 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnSelecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tMenu;
     // End of variables declaration//GEN-END:variables
 }
