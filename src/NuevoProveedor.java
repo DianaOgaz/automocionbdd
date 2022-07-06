@@ -2,13 +2,16 @@
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 public class NuevoProveedor extends javax.swing.JFrame {
-    datosProveedores datosP = new datosProveedores();
+    datosProveedores datosP = new datosProveedores(); //Guardar datos
+    Menu menu = new Menu();
     Connection con = conexion();
     
     public NuevoProveedor() {
@@ -27,6 +30,40 @@ public class NuevoProveedor extends javax.swing.JFrame {
             System.out.println("Conexion fallida " + ex);
         }
         return con;
+
+    }
+        public void actualizarDatos() { //Es la misma de mostrarDatos de ventana Menu 
+        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);       
+        //tMenu.setModel(modelo);
+
+        Statement st;
+        ResultSet rs;
+
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("SELECT * FROM proveedores");
+
+            while (rs.next()) {
+                String[] datos = new String[10];
+                datos[0] = rs.getString("nombreCorp");
+                datos[1] = rs.getString("estado");
+                datos[2] = rs.getString("calle");
+                datos[3] = rs.getString("colonia");
+                datos[4] = rs.getString("cp");
+                datos[5] = rs.getString("rfc");
+                datos[6] = rs.getString("curp");
+                datos[7] = rs.getString("telefono");
+                datos[8] = rs.getString("celular");
+                datos[9] = rs.getString("notas");
+
+                modelo.addRow(datos);
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("actualizarDatos.NuevoProveedor = " + ex);
+        }
 
     }
     public void agregarProveedor(){
@@ -53,8 +90,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
-        }    
-    }*/
+        }  */  
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -261,28 +298,29 @@ public class NuevoProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-         String cp = txtCP.getText();
+        
+        String cp = txtCP.getText();
         String curp = txtCURP.getText();
         String calle = txtCalle.getText();
         String celular = txtCelular.getText();
         String colonia = txtColonia.getText();
         String estado = txtEstado.getText();
-        String nombre = txtNombre.getText();
+        String nombreCorp = txtNombre.getText();
         String notas = txtNotas.getText();
         String rfc = txtRFC.getText();
         String telefono = txtTelefono.getText();
-        
-        Connection con = conexion();
+       
         try {
             Statement st = con.createStatement();
-            String query = "INSERT INTO proveedores (cp,curp,calle,celular,colonia,estado,nombre,notas,rfc,telefono) VALUES"
-            + "(\"" + cp + "\",\"" + curp + "\",\"" + calle + "\",\"" + celular + "\",\"" + colonia + "\",\"" + estado + 
-            "\" \"" + nombre + "\"\"" + notas + "\"\"" + rfc + "\"\"" + telefono + "\")";
+            String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc +  "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
             st.execute(query);
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        Menu menu = new Menu();//actualiza la tabla al momento
+        
        
     }//GEN-LAST:event_btnCrearActionPerformed
 

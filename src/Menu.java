@@ -8,13 +8,11 @@ import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 
 public class Menu extends javax.swing.JFrame {
-
+    
+    Connection con = conexion(); //conexion con la BDD
     datosProveedores datosProv = new datosProveedores();
-
-    //ventanas
-    NuevoProveedor nProveedor = new NuevoProveedor();
-    Proveedores vProveedores = new Proveedores();
-
+    seleccion seleccion = new seleccion();
+ 
     public Menu() {
         initComponents();
         conexion();
@@ -43,8 +41,6 @@ public class Menu extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tMenu.setModel(modelo);
 
-        Connection con = conexion();
-
         Statement st;
         ResultSet rs;
 
@@ -70,7 +66,7 @@ public class Menu extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.out.println("mostrarDatos = " + ex);
+            System.out.println("mostrarDatos.Menu = " + ex);
         }
 
     }
@@ -168,16 +164,25 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+       NuevoProveedor nProveedor = new NuevoProveedor();
         nProveedor.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
+       //Obtener informacion de la seleccion
+       
+        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
+        int columna = 0;
+        seleccion.iCaptu = (String) tMenu.getValueAt(fila,columna); //obtiene la info de la fila y la primera columna
+        //System.out.println(captu);
+        //seleccion.iCaptu = (String) captu;
+        System.out.println(seleccion.iCaptu + "  Este es");
+        //intancia para mostrar ventana de proveedores
+        Proveedores vProveedores = new Proveedores();
         vProveedores.setVisible(true);
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

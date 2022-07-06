@@ -13,6 +13,9 @@ public class datosFacturas {
     String costoPro = "";
     String notas = "";
     
+    //Para guardar seleccion
+    String iCaptu = "";
+    
     public datosFacturas(){ 
     }
     
@@ -29,6 +32,8 @@ public class datosFacturas {
         this.monto = monto;
         this.notas = notas;
         this.total = total;
+        
+        this.iCaptu = iCaptu;
         
     }
 
@@ -110,6 +115,15 @@ public class datosFacturas {
 
     public void setNotas(String notas) {
         this.notas = notas;
+    }
+
+    
+    public String getiCaptu() {
+        return iCaptu;
+    }
+
+    public void setiCaptu(String iCaptu) {
+        this.iCaptu = iCaptu;
     }
     
     
