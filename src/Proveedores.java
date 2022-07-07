@@ -11,21 +11,27 @@ public class Proveedores extends javax.swing.JFrame {
 
     datosFacturas dFacturas = new datosFacturas();
     seleccion seleccion = new seleccion();
-   
     
     
-    public Proveedores() {
+    
+    public Proveedores(String iCaptu) {
         initComponents();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
         
-        lblTitulo.setText(seleccion.iCaptu);
-        System.out.println(seleccion.iCaptu);
+        //lblTitulo.setText(seleccion.getiCaptu());
+        System.out.println(seleccion.getiCaptu()); //este siempre aparece en NULL
+        
+       //TODO: hacer jalar el boton de seleccionar y lograrcambiar el titulo del proveedor
        
         
         
         
+    }
+
+    private Proveedores() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
      public Connection conexion() {

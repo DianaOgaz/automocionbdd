@@ -11,7 +11,7 @@ public class Menu extends javax.swing.JFrame {
     
     Connection con = conexion(); //conexion con la BDD
     datosProveedores datosProv = new datosProveedores();
-    seleccion seleccion = new seleccion();
+    
  
     public Menu() {
         initComponents();
@@ -169,16 +169,23 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-       //Obtener informacion de la seleccion
        
+        //AIUDA AQUI 
+        //Obtener informacion de la seleccion
+        
+       
+        seleccion seleccion = new seleccion();
         int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
         int columna = 0;
-        seleccion.iCaptu = (String) tMenu.getValueAt(fila,columna); //obtiene la info de la fila y la primera columna
-        //System.out.println(captu);
-        //seleccion.iCaptu = (String) captu;
-        System.out.println(seleccion.iCaptu + "  Este es");
+         //obtiene la info de la fila y la primera columna
+        
+        //System.out.println(seleccion.getiCaptu() + "  Este es");
+        String iCaptu = (String) tMenu.getValueAt(fila,columna);
+       
+        
+        
         //intancia para mostrar ventana de proveedores
-        Proveedores vProveedores = new Proveedores();
+        Proveedores vProveedores = new Proveedores(iCaptu);
         vProveedores.setVisible(true);
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
