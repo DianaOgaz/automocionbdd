@@ -10,24 +10,30 @@ import javax.swing.table.DefaultTableModel;
 public class Proveedores extends javax.swing.JFrame {
 
     datosFacturas dFacturas = new datosFacturas();
-    seleccion seleccion = new seleccion();
+    // seleccion seleccion = new seleccion();
     
     
     
-    public Proveedores(String iCaptu) {
+    public Proveedores(String nombreProv) {
         initComponents();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
         
         //lblTitulo.setText(seleccion.getiCaptu());
-        System.out.println(seleccion.getiCaptu()); //este siempre aparece en NULL
+        
+        
+        // System.out.println(seleccion.getiCaptu()); //-> Este aparece null porque es un nuevo objeto al que nunca le has asignado el iCaptu
+        // Recuerda que cada objeto con el que trabajes es único, así funciona la POO
+        // A pesar de que se llame igual "seleccion" dentro de Menu.java, no es el mismo objeto que el "seleccion" de arriba ^
+        // Por eso necesitamos pasar los objetos y valores por los constructores. Así podemos modificar los objetos en cuestión ya creados
+        
+        
+        // Podemos pasar el valor requerido por el constructor, en vez de todo el objeto.
+        // Ya que solo estamos pasando un String
+        System.out.println(nombreProv);
         
        //TODO: hacer jalar el boton de seleccionar y lograrcambiar el titulo del proveedor
-       
-        
-        
-        
     }
 
     private Proveedores() {

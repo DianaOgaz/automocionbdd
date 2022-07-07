@@ -15,8 +15,8 @@ public class Menu extends javax.swing.JFrame {
  
     public Menu() {
         initComponents();
-        conexion();
-        mostrarDatos();
+        // conexion();
+        // mostrarDatos();
         this.setVisible(true);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
@@ -175,17 +175,19 @@ public class Menu extends javax.swing.JFrame {
         
        
         seleccion seleccion = new seleccion();
-        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
-        int columna = 0;
-         //obtiene la info de la fila y la primera columna
+        //int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
+        //int columna = 0;
+        //obtiene la info de la fila y la primera columna
         
         //System.out.println(seleccion.getiCaptu() + "  Este es");
-        String iCaptu = (String) tMenu.getValueAt(fila,columna);
+        //String iCaptu = (String) tMenu.getValueAt(fila,columna);
+        
+        // ^^^ Comentado por que no tengo BDD
        
         
-        
+        String prueba = "Esto funciona";
         //intancia para mostrar ventana de proveedores
-        Proveedores vProveedores = new Proveedores(iCaptu);
+        Proveedores vProveedores = new Proveedores(prueba);
         vProveedores.setVisible(true);
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
