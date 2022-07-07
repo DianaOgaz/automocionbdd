@@ -9,42 +9,32 @@ import javax.swing.table.DefaultTableModel;
 
 public class Proveedores extends javax.swing.JFrame {
 
+    Connection con = conexion(); //conexion con la BDD
     datosFacturas dFacturas = new datosFacturas();
-    // seleccion seleccion = new seleccion();
     
-    
-    
-    public Proveedores(String nombreProv) {
+   
+    public Proveedores(String iCaptu) {
         initComponents();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
         
-        //lblTitulo.setText(seleccion.getiCaptu());
         
+        //el contructor recibe una variable y se puede compartir solamente con el mismo tipo de dato.
+        mostrarProveedor(iCaptu);
+        lblTitulo.setText(iCaptu);
         
-        // System.out.println(seleccion.getiCaptu()); //-> Este aparece null porque es un nuevo objeto al que nunca le has asignado el iCaptu
-        // Recuerda que cada objeto con el que trabajes es único, así funciona la POO
-        // A pesar de que se llame igual "seleccion" dentro de Menu.java, no es el mismo objeto que el "seleccion" de arriba ^
-        // Por eso necesitamos pasar los objetos y valores por los constructores. Así podemos modificar los objetos en cuestión ya creados
-        
-        
-        // Podemos pasar el valor requerido por el constructor, en vez de todo el objeto.
-        // Ya que solo estamos pasando un String
-        System.out.println(nombreProv);
-        
-       //TODO: hacer jalar el boton de seleccionar y lograrcambiar el titulo del proveedor
     }
 
     private Proveedores() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+
      public Connection conexion() {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
-            System.out.println("Conexion lograda");
         } catch (SQLException ex) {
             System.out.println("Conexion fallida " + ex);
         }
@@ -52,35 +42,42 @@ public class Proveedores extends javax.swing.JFrame {
 
     }
     
-    public void mostrarDatosProveedor() {
-        String[] columnas = {"Cantidad", "Tipo Hamburgesa", "Refresco", "Nombre", "Fecha", "Cantidad"};
+    public void mostrarProveedor(String iCaptu) {
+        String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tTabla.setModel(modelo);
 
-        Connection con = conexion();
-
         Statement st;
         ResultSet rs;
+        
+        String a = "SELECT * FROM " + iCaptu;
+        System.out.println(a);
 
         try {
             st = con.createStatement();
-            rs = st.executeQuery("SELECT * FROM compras");
-
+            rs = st.executeQuery(a);
+  
             while (rs.next()) {
-                String[] datos = new String[6];
-                datos[0] = rs.getString("cantidad");
-                datos[1] = rs.getString("tipoh");
-                datos[2] = rs.getString("ref");
-                datos[3] = rs.getString("nombc");
-                datos[4] = rs.getString("fecha");
-                datos[5] = rs.getString("total");
+                String[] datos = new String[10];
+                datos[0] = rs.getString("cheque");
+                datos[1] = rs.getString("factura");
+                datos[2] = rs.getString("fechaReg");
+                datos[3] = rs.getString("monto");
+                datos[4] = rs.getString("abono");
+                datos[5] = rs.getString("fechaAbono");
+                datos[6] = rs.getString("total");
+                datos[7] = rs.getString("estado");
+                datos[8] = rs.getString("costoPro");
+                datos[9] = rs.getString("total");
+
                 modelo.addRow(datos);
 
             }
 
         } catch (SQLException ex) {
-            System.out.println("" + ex);
+            System.out.println("Fallo query de proveedores = " + ex);
         }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -176,9 +173,9 @@ public class Proveedores extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSelecion)
-                    .addComponent(btnAgegar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAgegar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSelecion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 

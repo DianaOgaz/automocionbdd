@@ -1,22 +1,21 @@
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class prueba {
+
     public static void main(String[] args) {
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/automocion","root","root");
-            Statement stmt=con.createStatement();  
-            ResultSet rs=stmt.executeQuery("show databases;");
-            System.out.println("Connected");  
+
+        String cadena = "Hola mundo, programando en Java desde parzibyte.me";
+       
+        for (int i = 0; i < cadena.length(); i++) {          
+            if (cadena.charAt(i) == ' ') {
+                String nuevo = cadena.
+            }
         }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-    }  
-}
+    }
+
+}  //
+

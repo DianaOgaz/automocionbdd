@@ -15,8 +15,8 @@ public class Menu extends javax.swing.JFrame {
  
     public Menu() {
         initComponents();
-        // conexion();
-        // mostrarDatos();
+        conexion();
+        mostrarDatos();
         this.setVisible(true);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
@@ -27,8 +27,7 @@ public class Menu extends javax.swing.JFrame {
     public Connection conexion() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
-            System.out.println("Conexion lograda");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");            
         } catch (SQLException ex) {
             System.out.println("Conexion fallida " + ex);
         }
@@ -66,7 +65,7 @@ public class Menu extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.out.println("mostrarDatos.Menu = " + ex);
+            System.out.println("Fallo query de Menu = " + ex);
         }
 
     }
@@ -169,25 +168,14 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-       
-        //AIUDA AQUI 
+    
         //Obtener informacion de la seleccion
+        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
+        int columna = 0;      
+        String iCaptu = (String) tMenu.getValueAt(fila,columna); //Se declara la variable 
         
-       
-        seleccion seleccion = new seleccion();
-        //int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
-        //int columna = 0;
-        //obtiene la info de la fila y la primera columna
-        
-        //System.out.println(seleccion.getiCaptu() + "  Este es");
-        //String iCaptu = (String) tMenu.getValueAt(fila,columna);
-        
-        // ^^^ Comentado por que no tengo BDD
-       
-        
-        String prueba = "Esto funciona";
         //intancia para mostrar ventana de proveedores
-        Proveedores vProveedores = new Proveedores(prueba);
+        Proveedores vProveedores = new Proveedores(iCaptu);
         vProveedores.setVisible(true);
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
