@@ -5,33 +5,32 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class Proveedores extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
     datosFacturas dFacturas = new datosFacturas();
-    
-   
+
     public Proveedores(String iCaptu) {
         initComponents();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
-        
-        
+
         //el contructor recibe una variable y se puede compartir solamente con el mismo tipo de dato.
         mostrarProveedor(iCaptu);
         lblTitulo.setText(iCaptu);
-        
+
     }
 
     private Proveedores() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
-     public Connection conexion() {
+    public Connection conexion() {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
@@ -41,7 +40,7 @@ public class Proveedores extends javax.swing.JFrame {
         return con;
 
     }
-    
+
     public void mostrarProveedor(String iCaptu) {
         String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
@@ -49,14 +48,14 @@ public class Proveedores extends javax.swing.JFrame {
 
         Statement st;
         ResultSet rs;
-        
+
         String a = "SELECT * FROM " + "`" + iCaptu + "`";
         System.out.println(a);
 
         try {
             st = con.createStatement();
             rs = st.executeQuery(a);
-  
+
             while (rs.next()) {
                 String[] datos = new String[10];
                 datos[0] = rs.getString("cheque");
@@ -90,6 +89,7 @@ public class Proveedores extends javax.swing.JFrame {
         tTabla = new javax.swing.JTable();
         btnSelecion = new javax.swing.JButton();
         btnAgegar = new javax.swing.JButton();
+        btnSelecion1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -119,7 +119,7 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblTitulo)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -131,7 +131,7 @@ public class Proveedores extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -151,19 +151,29 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
 
+        btnSelecion1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnSelecion1.setText("Borrar Registro");
+        btnSelecion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecion1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(btnSelecion, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnSelecion1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
                         .addComponent(btnAgegar, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -171,11 +181,13 @@ public class Proveedores extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAgegar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSelecion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSelecion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSelecion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -183,7 +195,8 @@ public class Proveedores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgegarActionPerformed
-        AgregarRegistroProveedores registroProv = new AgregarRegistroProveedores();
+
+        AgregarRegistroProveedores registroProv = new AgregarRegistroProveedores(lblTitulo.getText());
         registroProv.setVisible(true);
 
     }//GEN-LAST:event_btnAgegarActionPerformed
@@ -191,6 +204,23 @@ public class Proveedores extends javax.swing.JFrame {
     private void btnSelecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSelecionActionPerformed
+
+    private void btnSelecion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecion1ActionPerformed
+        //Obtener informacion de la seleccion
+        int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
+        int columna = 0;
+        String iSelecion = (String) tTabla.getValueAt(fila, columna); //Se declara la variable 
+        try {
+            Statement st = con.createStatement();
+            String query = "DELETE FROM " + "`" + lblTitulo.getText() + "`" + " WHERE cheque = '" + iSelecion + "'";
+            System.out.println(query);
+            st.execute(query);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mostrarProveedor(lblTitulo.getText()); //Actualiza tabla
+    }//GEN-LAST:event_btnSelecion1ActionPerformed
 
     public static void main(String args[]) {
 
@@ -204,6 +234,7 @@ public class Proveedores extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgegar;
     private javax.swing.JButton btnSelecion;
+    private javax.swing.JButton btnSelecion1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;

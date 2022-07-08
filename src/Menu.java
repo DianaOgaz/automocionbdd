@@ -5,14 +5,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class Menu extends javax.swing.JFrame {
-    
+
     Connection con = conexion(); //conexion con la BDD
     datosProveedores datosProv = new datosProveedores();
-    
- 
+
     public Menu() {
         initComponents();
         conexion();
@@ -21,18 +22,16 @@ public class Menu extends javax.swing.JFrame {
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
-        
     }
 
     public Connection conexion() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");            
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
         } catch (SQLException ex) {
             System.out.println("Conexion fallida " + ex);
         }
         return con;
-
     }
 
     public void mostrarDatos() {
@@ -80,6 +79,7 @@ public class Menu extends javax.swing.JFrame {
         tMenu = new javax.swing.JTable();
         btnSelecionar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
+        btnSelecionar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,6 +111,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        btnSelecionar1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnSelecionar1.setText("Borrar Proveedor");
+        btnSelecionar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecionar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -121,6 +129,8 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(btnSelecionar1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -137,7 +147,8 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
-                    .addComponent(btnSelecionar))
+                    .addComponent(btnSelecionar)
+                    .addComponent(btnSelecionar1))
                 .addContainerGap())
         );
 
@@ -162,23 +173,42 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       NuevoProveedor nProveedor = new NuevoProveedor();
+       //TODO: se debe agregar la tabla a la BDD, de lo contrario no la detecta el sistema
+        
+        NuevoProveedor nProveedor = new NuevoProveedor();
         nProveedor.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-    
+
         //Obtener informacion de la seleccion
         int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
-        int columna = 0;      
-        String iCaptu = (String) tMenu.getValueAt(fila,columna); //Se declara la variable 
-        
+        int columna = 0;
+        String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
+
         //intancia para mostrar ventana de proveedores
         Proveedores vProveedores = new Proveedores(iCaptu);
         vProveedores.setVisible(true);
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
-    
+    private void btnSelecionar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionar1ActionPerformed
+        //Obtener informacion de la seleccion
+        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
+        int columna = 0;
+        String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
+        try {
+            Statement st = con.createStatement();
+            String query = "DELETE FROM proveedores WHERE nombreCorp = '" + iCaptu + "'";
+            System.out.println(query);
+            st.execute(query);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mostrarDatos(); //Actualiza la tabla 
+
+    }//GEN-LAST:event_btnSelecionar1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -215,6 +245,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnSelecionar;
+    private javax.swing.JButton btnSelecionar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

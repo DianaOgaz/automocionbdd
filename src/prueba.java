@@ -7,14 +7,22 @@ import java.sql.Statement;
 public class prueba {
 
     public static void main(String[] args) {
-
-        String cadena = "Hola mundo, programando en Java desde parzibyte.me";
-       
-        for (int i = 0; i < cadena.length(); i++) {          
-            if (cadena.charAt(i) == ' ') {
-                String nuevo = cadena;
-            }
-        }
+            
+            String variable = "a";
+            
+            String query = "CREATE TABLE `automocion`." + "`" + variable + "`" + "(`" 
+                    + variable + "`" + "VARCHAR(45) NOT NULL,"
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
+                    + "`" + variable + "`" + "VARCHAR(45) NULL)" ;
+            System.out.println(query);
     }
 
 }  //

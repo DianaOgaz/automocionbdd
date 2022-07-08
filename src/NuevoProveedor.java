@@ -66,31 +66,32 @@ public class NuevoProveedor extends javax.swing.JFrame {
         }
 
     }
-    public void agregarProveedor(){
-        
-   /* public void actualizarAlmacen() {
-        Statement st;
+    public void crearTabla(){
+        String nombre = txtNombre.getText();
         try {
-            st = con.createStatement();
-            String query = "UPDATE almacen SET "
-                    + "nombre = " + datosP.nombreCorp + ","
-                    + "cp = " + datosP.cp + ","
-                    + "curp = " + datosP.curp + ","
-                    + "calle = " + datosP.calle + ","
-                    + "celular = " + datosP.celular + ","
-                    + "colonia = " + datosP.colonia + ","
-                    + "estado = " + datosP.estado + ","
-                    + "notas = " + datosP.notas + ","
-                    + "rfc = " + datosP.rfc + " "
-                    + "telefono = " + datosP.telefono + " "
-                //    + "WHERE id = " + id;
-           // System.out.println("ID ---------------------" + id);
-            st.executeUpdate(query);
+            Statement st = con.createStatement();
+            String query = "CREATE TABLE " + "`" + nombre + "`" + "(`" 
+                    + "nombreCorp" + "`" + "VARCHAR(45) NULL,"  //Llave primaria
+                    + "`" + "estado" + "`" + "VARCHAR(45) NULL," 
+                    + "`" + "calle" + "`" + "VARCHAR(45) NULL," 
+                    + "`" + "colonia" + "`" + "VARCHAR(45) NULL," 
+                    + "`" + "cp" + "`" + "VARCHAR(45) NULL," 
+                    + "`" + "rfc" + "`" + "VARCHAR(45) NULL," 
+                    + "`" + "curp" + "`" + "VARCHAR(45) NULL," 
+                    + "`" + "telefono" + "`" + "VARCHAR(45) NULL," 
+                    + "`" + "celular" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "notas" + "`" + "VARCHAR(45) NULL)" ;
+            st.execute(query);
             System.out.println(query);
-
+            
         } catch (SQLException ex) {
-            System.out.println("Error" + ex);
-        }  */  
+            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void insertarTabla(String cp,String curp){
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -231,7 +232,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCrear))
+                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(32, 32, 32)
@@ -274,7 +275,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -314,13 +315,21 @@ public class NuevoProveedor extends javax.swing.JFrame {
             Statement st = con.createStatement();
             String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc +  "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
             st.execute(query);
+            crearTabla();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Statement st = con.createStatement();
+            String query = "INSERT INTO " + "`" + txtNombre.getText() + "`" + "(nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc +  "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
+            st.execute(query);           
             
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         Menu menu = new Menu();//actualiza la tabla al momento
-        
        
     }//GEN-LAST:event_btnCrearActionPerformed
 
