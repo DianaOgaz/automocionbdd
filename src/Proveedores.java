@@ -50,7 +50,7 @@ public class Proveedores extends javax.swing.JFrame {
         Statement st;
         ResultSet rs;
         
-        String a = "SELECT * FROM " + iCaptu;
+        String a = "SELECT * FROM " + "`" + iCaptu + "`";
         System.out.println(a);
 
         try {
