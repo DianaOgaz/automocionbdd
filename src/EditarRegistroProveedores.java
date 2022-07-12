@@ -12,6 +12,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     Connection con = conexion();
     String iCaptu;
     Proveedores proveedores;
+
     
     public EditarRegistroProveedores(String id,String iCaptu, Proveedores prov) {
         this.proveedores = prov;
