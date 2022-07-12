@@ -15,6 +15,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
     Menu menuPrincipal;
 
     Connection con = conexion();
+    int id = 26;
 
     public NuevoProveedor(Menu menu) {
         this.menuPrincipal = menu;
@@ -41,7 +42,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
     }
 
     public void actualizarDatos() { //Es la misma de mostrarDatos de ventana Menu 
-        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
+        String[] columnas = {"id","nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         //tMenu.setModel(modelo);
 
@@ -81,8 +82,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
         try {
             Statement st = con.createStatement();
             String query = "CREATE TABLE " + "`" + nombre + "`" + "(`"
-                    //+ "id" + "`" + "VARCHAR(45) NOT NULL,"  
-                    + "cheque" + "`" + "VARCHAR(45) NULL,"
+                    + "id" + "`" + "VARCHAR(45) NOT NULL,"  
+                    + "`" + "cheque" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "factura" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "fechaReg" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "monto" + "`" + "VARCHAR(45) NULL,"
@@ -98,8 +99,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -318,17 +319,21 @@ public class NuevoProveedor extends javax.swing.JFrame {
         String notas = txtNotas.getText();
         String rfc = txtRFC.getText();
         String telefono = txtTelefono.getText();
-
+        
+        id++;
+        
         try {
             Statement st = con.createStatement();
-            String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
+            String query = "INSERT INTO proveedores (id,nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + id + "\",\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
             st.execute(query);
 
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        crearTabla();
+        
+        
+        crearTabla();//Crea la tabla en la base de datos
         this.menuPrincipal.mostrarDatos(); //Actualiza la tabla
         this.setVisible(false);
 

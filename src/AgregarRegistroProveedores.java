@@ -47,7 +47,7 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
 
     }
     public void mostrarProveedor(String iCaptu) {
-        String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
+        String[] columnas = {"id","cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
        // tTabla.setModel(modelo);
 
@@ -62,17 +62,18 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
             rs = st.executeQuery(a);
 
             while (rs.next()) {
-                String[] datos = new String[10];
-                datos[0] = rs.getString("cheque");
-                datos[1] = rs.getString("factura");
-                datos[2] = rs.getString("fechaReg");
-                datos[3] = rs.getString("monto");
-                datos[4] = rs.getString("abono");
-                datos[5] = rs.getString("fechaAbono");
-                datos[6] = rs.getString("total");
-                datos[7] = rs.getString("estado");
-                datos[8] = rs.getString("costoPro");
-                datos[9] = rs.getString("total");
+                String[] datos = new String[11];
+                datos[0] = rs.getString("id");
+                datos[1] = rs.getString("cheque");
+                datos[2] = rs.getString("factura");
+                datos[3] = rs.getString("fechaReg");
+                datos[4] = rs.getString("monto");
+                datos[5] = rs.getString("abono");
+                datos[6] = rs.getString("fechaAbono");
+                datos[7] = rs.getString("total");
+                datos[8] = rs.getString("estado");
+                datos[9] = rs.getString("costoPro");
+                datos[10] = rs.getString("total");
 
                 modelo.addRow(datos);
 
@@ -324,10 +325,10 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         String estado = txtEstado.getText();
         String costoPro = txtCostoPro.getText();
         String notas = txtNotas.getText();
-
+        id++;
         try {
             Statement st = con.createStatement();
-            String query = "INSERT INTO " + lblTitulo.getText() + "(cheque,factura,fechaReg,monto,abono,fechaAbono,total,estado,costoPro,notas) VALUES (\"" + cheque + "\",\"" + factura + "\",\"" + fechaReg + "\",\"" + monto + "\",\"" + abono + "\",\"" + fechaAbono + "\", \"" + total + "\",\"" + estado + "\",\"" + costoPro + "\",\"" + notas + "\")";
+            String query = "INSERT INTO " + lblTitulo.getText() + "(id,cheque,factura,fechaReg,monto,abono,fechaAbono,total,estado,costoPro,notas) VALUES (\"" + id + "\",\"" + cheque + "\",\"" + factura + "\",\"" + fechaReg + "\",\"" + monto + "\",\"" + abono + "\",\"" + fechaAbono + "\", \"" + total + "\",\"" + estado + "\",\"" + costoPro + "\",\"" + notas + "\")";
             System.out.println(query);
             st.execute(query);
 

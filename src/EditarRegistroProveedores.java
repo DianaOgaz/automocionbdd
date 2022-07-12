@@ -8,13 +8,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditarRegistroProveedores extends javax.swing.JFrame {
-
+    
     Connection con = conexion();
     String iCaptu;
     Proveedores proveedores;
-
     
-    public EditarRegistroProveedores(String id,String iCaptu, Proveedores prov) {
+    public EditarRegistroProveedores(String id, String iCaptu, Proveedores prov) {
         this.proveedores = prov;
         
         initComponents();
@@ -24,13 +23,12 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         this.getContentPane().setBackground(Color.GRAY);
         
         lblTitulo.setText(iCaptu);
-       
+        
     }
-
+    
     private EditarRegistroProveedores() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
     
     public Connection conexion() {
         Connection con = null;
@@ -41,10 +39,11 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
             System.out.println("Conexion fallida " + ex);
         }
         return con;
-
+        
     }
-    public void updateTable(int id){
-     try {
+
+    public void updateTable(int id) {
+        try {
             Statement st = con.createStatement();
             String query = "UPDATE " + "`" + lblTitulo.getText() + "`" + " SET "
                     + "cheque = '" + txtCheque.getText() + "'" + ","
@@ -57,16 +56,16 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
                     + "estado = '" + txtEstado.getText() + "'" + ","
                     + "costoPro = '" + txtCostoPro.getText() + "'" + ","
                     + "notas = '" + txtNotas.getText() + "'"; // + "'" 
-                    //+ "WHERE id = " + id;
+            //+ "WHERE id = " + id;
             
             System.out.println(query);
             st.execute(query);
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        }        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -286,14 +285,16 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-       int id = 0;
-       updateTable(id);
-       this.proveedores.mostrarProveedor(this.iCaptu);
+        
+        int id = 0;
+        updateTable(id);
+        this.proveedores.mostrarProveedor(this.iCaptu);
         System.out.println(iCaptu);
- 
+        
+        this.setVisible(false);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

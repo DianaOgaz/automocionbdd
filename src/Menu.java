@@ -35,7 +35,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     public void mostrarDatos() {
-        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
+        String[] columnas = {"id" + "nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tMenu.setModel(modelo);
 
@@ -47,17 +47,18 @@ public class Menu extends javax.swing.JFrame {
             rs = st.executeQuery("SELECT * FROM proveedores");
 
             while (rs.next()) {
-                String[] datos = new String[10];
-                datos[0] = rs.getString("nombreCorp");
-                datos[1] = rs.getString("estado");
-                datos[2] = rs.getString("calle");
-                datos[3] = rs.getString("colonia");
-                datos[4] = rs.getString("cp");
-                datos[5] = rs.getString("rfc");
-                datos[6] = rs.getString("curp");
-                datos[7] = rs.getString("telefono");
-                datos[8] = rs.getString("celular");
-                datos[9] = rs.getString("notas");
+                String[] datos = new String[11];
+                datos[0] = rs.getString("id");
+                datos[1] = rs.getString("nombreCorp");
+                datos[2] = rs.getString("estado");
+                datos[3] = rs.getString("calle");
+                datos[4] = rs.getString("colonia");
+                datos[5] = rs.getString("cp");
+                datos[6] = rs.getString("rfc");
+                datos[7] = rs.getString("curp");
+                datos[8] = rs.getString("telefono");
+                datos[9] = rs.getString("celular");
+                datos[10] = rs.getString("notas");
 
                 modelo.addRow(datos);
 
@@ -209,7 +210,7 @@ public class Menu extends javax.swing.JFrame {
 
         //Obtener informacion de la seleccion
         int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
-        int columna = 0;
+        int columna = 1;
         String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
         int id = 0;
 
@@ -221,7 +222,7 @@ public class Menu extends javax.swing.JFrame {
     private void btnSelecionar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionar1ActionPerformed
         //Obtener informacion de la seleccion
         int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
-        int columna = 0;
+        int columna = 1;
         String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
        
         borrarTablas(iCaptu);
