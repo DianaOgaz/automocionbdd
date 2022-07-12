@@ -14,11 +14,12 @@ public class Proveedores extends javax.swing.JFrame {
     Connection con = conexion(); //conexion con la BDD
     datosFacturas dFacturas = new datosFacturas();
 
-    public Proveedores(String iCaptu) {
+    public Proveedores(String iCaptu, int id) {
         initComponents();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
+        conexion();
 
         //el contructor recibe una variable y se puede compartir solamente con el mismo tipo de dato.
         mostrarProveedor(iCaptu);
@@ -196,13 +197,24 @@ public class Proveedores extends javax.swing.JFrame {
 
     private void btnAgegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgegarActionPerformed
 
-        AgregarRegistroProveedores registroProv = new AgregarRegistroProveedores(lblTitulo.getText());
+        AgregarRegistroProveedores registroProv = new AgregarRegistroProveedores(this, lblTitulo.getText());
         registroProv.setVisible(true);
 
     }//GEN-LAST:event_btnAgegarActionPerformed
 
     private void btnSelecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionActionPerformed
-        // TODO add your handling code here:
+
+        int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
+        int columna = 0;
+        String iCaptu = (String) tTabla.getValueAt(fila, columna); //Se declara la variable 
+
+        int fila1 = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
+        int columna1 = tTabla.getSelectedColumn();
+        String id = (String) tTabla.getValueAt(fila1, columna1); //Se declara la variable 
+
+        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, id, this);
+        nvoReg.setVisible(true);
+
     }//GEN-LAST:event_btnSelecionActionPerformed
 
     private void btnSelecion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecion1ActionPerformed
@@ -219,6 +231,7 @@ public class Proveedores extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         mostrarProveedor(lblTitulo.getText()); //Actualiza tabla
     }//GEN-LAST:event_btnSelecion1ActionPerformed
 

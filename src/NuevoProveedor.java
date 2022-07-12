@@ -10,17 +10,24 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class NuevoProveedor extends javax.swing.JFrame {
+
     datosProveedores datosP = new datosProveedores(); //Guardar datos
-    Menu menu = new Menu();
+    Menu menuPrincipal;
+
     Connection con = conexion();
-    
-    public NuevoProveedor() {
+
+    public NuevoProveedor(Menu menu) {
+        this.menuPrincipal = menu;
         initComponents();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
     }
-    
+
+    public NuevoProveedor() {
+
+    }
+
     public Connection conexion() {
         Connection con = null;
         try {
@@ -32,9 +39,10 @@ public class NuevoProveedor extends javax.swing.JFrame {
         return con;
 
     }
-        public void actualizarDatos() { //Es la misma de mostrarDatos de ventana Menu 
+
+    public void actualizarDatos() { //Es la misma de mostrarDatos de ventana Menu 
         String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
-        DefaultTableModel modelo = new DefaultTableModel(null, columnas);       
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         //tMenu.setModel(modelo);
 
         Statement st;
@@ -45,17 +53,18 @@ public class NuevoProveedor extends javax.swing.JFrame {
             rs = st.executeQuery("SELECT * FROM proveedores");
 
             while (rs.next()) {
-                String[] datos = new String[10];
-                datos[0] = rs.getString("nombreCorp");
-                datos[1] = rs.getString("estado");
-                datos[2] = rs.getString("calle");
-                datos[3] = rs.getString("colonia");
-                datos[4] = rs.getString("cp");
-                datos[5] = rs.getString("rfc");
-                datos[6] = rs.getString("curp");
-                datos[7] = rs.getString("telefono");
-                datos[8] = rs.getString("celular");
-                datos[9] = rs.getString("notas");
+                String[] datos = new String[11];
+                datos[0] = rs.getString("id");
+                datos[1] = rs.getString("nombreCorp");
+                datos[2] = rs.getString("estado");
+                datos[3] = rs.getString("calle");
+                datos[4] = rs.getString("colonia");
+                datos[5] = rs.getString("cp");
+                datos[6] = rs.getString("rfc");
+                datos[7] = rs.getString("curp");
+                datos[8] = rs.getString("telefono");
+                datos[9] = rs.getString("celular");
+                datos[10] = rs.getString("notas");
 
                 modelo.addRow(datos);
 
@@ -66,33 +75,32 @@ public class NuevoProveedor extends javax.swing.JFrame {
         }
 
     }
-    public void crearTabla(){
+
+    public void crearTabla() {
         String nombre = txtNombre.getText();
         try {
             Statement st = con.createStatement();
-            String query = "CREATE TABLE " + "`" + nombre + "`" + "(`" 
-                    + "nombreCorp" + "`" + "VARCHAR(45) NULL,"  //Llave primaria
-                    + "`" + "estado" + "`" + "VARCHAR(45) NULL," 
-                    + "`" + "calle" + "`" + "VARCHAR(45) NULL," 
-                    + "`" + "colonia" + "`" + "VARCHAR(45) NULL," 
-                    + "`" + "cp" + "`" + "VARCHAR(45) NULL," 
-                    + "`" + "rfc" + "`" + "VARCHAR(45) NULL," 
-                    + "`" + "curp" + "`" + "VARCHAR(45) NULL," 
-                    + "`" + "telefono" + "`" + "VARCHAR(45) NULL," 
-                    + "`" + "celular" + "`" + "VARCHAR(45) NULL,"
-                    + "`" + "notas" + "`" + "VARCHAR(45) NULL)" ;
-            st.execute(query);
+            String query = "CREATE TABLE " + "`" + nombre + "`" + "(`"
+                    //+ "id" + "`" + "VARCHAR(45) NOT NULL,"  
+                    + "cheque" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "factura" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "fechaReg" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "monto" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "abono" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "fechaAbono" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "total" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "estado" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "costoPro" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "notas" + "`" + "VARCHAR(45) NULL)";
             System.out.println(query);
-            
+            st.execute(query);
+
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
-    public void insertarTabla(String cp,String curp){
-        
-    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -299,7 +307,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        
+
         String cp = txtCP.getText();
         String curp = txtCURP.getText();
         String calle = txtCalle.getText();
@@ -310,27 +318,20 @@ public class NuevoProveedor extends javax.swing.JFrame {
         String notas = txtNotas.getText();
         String rfc = txtRFC.getText();
         String telefono = txtTelefono.getText();
-       
+
         try {
             Statement st = con.createStatement();
-            String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc +  "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
+            String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
             st.execute(query);
-            crearTabla();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            Statement st = con.createStatement();
-            String query = "INSERT INTO " + "`" + txtNombre.getText() + "`" + "(nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc +  "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
-            st.execute(query);           
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        Menu menu = new Menu();//actualiza la tabla al momento
-       
+
+        crearTabla();
+        this.menuPrincipal.mostrarDatos(); //Actualiza la tabla
+        this.setVisible(false);
+
     }//GEN-LAST:event_btnCrearActionPerformed
 
     public static void main(String args[]) {

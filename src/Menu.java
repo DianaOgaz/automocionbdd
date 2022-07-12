@@ -64,9 +64,32 @@ public class Menu extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            System.out.println("Fallo query de Menu = " + ex);
+            System.out.println("Fallo query Menu = " + ex);
         }
 
+    }
+    
+    public void borrarTablas(String iCaptu){
+        try {
+            Statement st = con.createStatement();
+            String query = "DELETE FROM proveedores WHERE nombreCorp = '" + iCaptu + "'";
+            System.out.println(query);
+            st.execute(query);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Statement st = con.createStatement();
+            String query = "DROP TABLE `" + iCaptu + "`";
+            System.out.println(query);
+            st.execute(query);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        mostrarDatos(); //Actualiza la tabla 
     }
 
     @SuppressWarnings("unchecked")
@@ -144,11 +167,15 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregar)
-                    .addComponent(btnSelecionar)
-                    .addComponent(btnSelecionar1))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSelecionar)
+                            .addComponent(btnSelecionar1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(btnAgregar)))
                 .addContainerGap())
         );
 
@@ -173,9 +200,8 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       //TODO: se debe agregar la tabla a la BDD, de lo contrario no la detecta el sistema
-        
-        NuevoProveedor nProveedor = new NuevoProveedor();
+      
+        NuevoProveedor nProveedor = new NuevoProveedor(this);
         nProveedor.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -185,9 +211,10 @@ public class Menu extends javax.swing.JFrame {
         int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
         int columna = 0;
         String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
+        int id = 0;
 
         //intancia para mostrar ventana de proveedores
-        Proveedores vProveedores = new Proveedores(iCaptu);
+        Proveedores vProveedores = new Proveedores(iCaptu,id);
         vProveedores.setVisible(true);
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
@@ -196,16 +223,8 @@ public class Menu extends javax.swing.JFrame {
         int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
         int columna = 0;
         String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
-        try {
-            Statement st = con.createStatement();
-            String query = "DELETE FROM proveedores WHERE nombreCorp = '" + iCaptu + "'";
-            System.out.println(query);
-            st.execute(query);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        mostrarDatos(); //Actualiza la tabla 
+       
+        borrarTablas(iCaptu);
 
     }//GEN-LAST:event_btnSelecionar1ActionPerformed
 

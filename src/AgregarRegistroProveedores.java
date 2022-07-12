@@ -1,31 +1,40 @@
 
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 public class AgregarRegistroProveedores extends javax.swing.JFrame {
+
     Connection con = conexion();
-    
-    public AgregarRegistroProveedores(String iCaptu) {
-        
+    Proveedores proveedores;
+    String iCaptu;
+    int id = 0;
+
+    public AgregarRegistroProveedores(Proveedores prov,String iCaptu) {
+        this.proveedores = prov;
+        this.iCaptu = iCaptu;
+            
         initComponents();
-       
+
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
-        
+
         lblTitulo.setText(iCaptu);
-       
+
     }
 
     private AgregarRegistroProveedores() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        initComponents();
     }
-    
+
     public Connection conexion() {
         Connection con = null;
         try {
@@ -37,7 +46,47 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         return con;
 
     }
-  
+    public void mostrarProveedor(String iCaptu) {
+        String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+       // tTabla.setModel(modelo);
+
+        Statement st;
+        ResultSet rs;
+
+        String a = "SELECT * FROM " + "`" + iCaptu + "`";
+        System.out.println(a);
+
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(a);
+
+            while (rs.next()) {
+                String[] datos = new String[10];
+                datos[0] = rs.getString("cheque");
+                datos[1] = rs.getString("factura");
+                datos[2] = rs.getString("fechaReg");
+                datos[3] = rs.getString("monto");
+                datos[4] = rs.getString("abono");
+                datos[5] = rs.getString("fechaAbono");
+                datos[6] = rs.getString("total");
+                datos[7] = rs.getString("estado");
+                datos[8] = rs.getString("costoPro");
+                datos[9] = rs.getString("total");
+
+                modelo.addRow(datos);
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Fallo query de proveedores = " + ex);
+        }
+
+    }
+
+    
+ 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -264,7 +313,7 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        this.setResizable(false);
+
         String cheque = txtCheque.getText();
         String factura = txtFactura.getText();
         String fechaReg = txtFechaReg.getText();
@@ -275,18 +324,20 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         String estado = txtEstado.getText();
         String costoPro = txtCostoPro.getText();
         String notas = txtNotas.getText();
-        
+
         try {
             Statement st = con.createStatement();
-            String query = "INSERT INTO " + lblTitulo.getText() + "(cheque,factura,fechaReg,monto,abono,fechaAbono,total,estado,costoPro,notas) VALUES (\"" + cheque + "\",\"" + factura + "\",\"" + fechaReg + "\",\"" + monto + "\",\"" + abono + "\",\"" + fechaAbono +  "\", \"" + total + "\",\"" + estado + "\",\"" + costoPro + "\",\"" + notas + "\")";
+            String query = "INSERT INTO " + lblTitulo.getText() + "(cheque,factura,fechaReg,monto,abono,fechaAbono,total,estado,costoPro,notas) VALUES (\"" + cheque + "\",\"" + factura + "\",\"" + fechaReg + "\",\"" + monto + "\",\"" + abono + "\",\"" + fechaAbono + "\", \"" + total + "\",\"" + estado + "\",\"" + costoPro + "\",\"" + notas + "\")";
             System.out.println(query);
             st.execute(query);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        this.proveedores.mostrarProveedor(this.iCaptu);
         this.setVisible(false);
-        AgregarRegistroProveedores agr = new AgregarRegistroProveedores();
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     public static void main(String args[]) {
