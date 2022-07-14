@@ -15,12 +15,11 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
     Connection con = conexion();
     Proveedores proveedores;
     String iCaptu;
-    int id = 0;
 
-    public AgregarRegistroProveedores(Proveedores prov,String iCaptu) {
+    public AgregarRegistroProveedores(Proveedores prov, String iCaptu) {
         this.proveedores = prov;
         this.iCaptu = iCaptu;
-            
+
         initComponents();
 
         this.setResizable(true);
@@ -46,10 +45,11 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         return con;
 
     }
+
     public void mostrarProveedor(String iCaptu) {
-        String[] columnas = {"id","cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
+        String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-       // tTabla.setModel(modelo);
+        // tTabla.setModel(modelo);
 
         Statement st;
         ResultSet rs;
@@ -62,21 +62,19 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
             rs = st.executeQuery(a);
 
             while (rs.next()) {
-                String[] datos = new String[11];
-                datos[0] = rs.getString("id");
-                datos[1] = rs.getString("cheque");
-                datos[2] = rs.getString("factura");
-                datos[3] = rs.getString("fechaReg");
-                datos[4] = rs.getString("monto");
-                datos[5] = rs.getString("abono");
-                datos[6] = rs.getString("fechaAbono");
-                datos[7] = rs.getString("total");
-                datos[8] = rs.getString("estado");
-                datos[9] = rs.getString("costoPro");
-                datos[10] = rs.getString("total");
+                String[] datos = new String[10];
+                datos[0] = rs.getString("cheque");
+                datos[1] = rs.getString("factura");
+                datos[2] = rs.getString("fechaReg");
+                datos[3] = rs.getString("monto");
+                datos[4] = rs.getString("abono");
+                datos[5] = rs.getString("fechaAbono");
+                datos[6] = rs.getString("total");
+                datos[7] = rs.getString("estado");
+                datos[8] = rs.getString("costoPro");
+                datos[9] = rs.getString("total");
 
                 modelo.addRow(datos);
-
             }
 
         } catch (SQLException ex) {
@@ -84,9 +82,6 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         }
 
     }
-
-    
- 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -325,18 +320,17 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         String estado = txtEstado.getText();
         String costoPro = txtCostoPro.getText();
         String notas = txtNotas.getText();
-        id++;
+
         try {
+
             Statement st = con.createStatement();
-            String query = "INSERT INTO " + lblTitulo.getText() + "(id,cheque,factura,fechaReg,monto,abono,fechaAbono,total,estado,costoPro,notas) VALUES (\"" + id + "\",\"" + cheque + "\",\"" + factura + "\",\"" + fechaReg + "\",\"" + monto + "\",\"" + abono + "\",\"" + fechaAbono + "\", \"" + total + "\",\"" + estado + "\",\"" + costoPro + "\",\"" + notas + "\")";
+            String query = "INSERT INTO " + lblTitulo.getText() + "(cheque,factura,fechaReg,monto,abono,fechaAbono,total,estado,costoPro,notas) VALUES (\"" + cheque + "\",\"" + factura + "\",\"" + fechaReg + "\",\"" + monto + "\",\"" + abono + "\",\"" + fechaAbono + "\", \"" + total + "\",\"" + estado + "\",\"" + costoPro + "\",\"" + notas + "\")";
             System.out.println(query);
             st.execute(query);
-
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        this.proveedores.mostrarProveedor(this.iCaptu);
+        this.proveedores.mostrarProveedor(this.iCaptu); //Llama a proveedores y se lleva a iCaptu
         this.setVisible(false);
 
     }//GEN-LAST:event_btnGuardarActionPerformed

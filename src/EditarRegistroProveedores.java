@@ -12,12 +12,14 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     Connection con = conexion();
     String iCaptu;
     Proveedores proveedores;
+    String iCheque;
+  
     
-    public EditarRegistroProveedores(String id, String iCaptu, Proveedores prov) {
-        this.proveedores = prov;
-        
+    public EditarRegistroProveedores(String iCaptu, Proveedores prov, String iCheque) {
+        this.proveedores = prov;       
         initComponents();
         this.iCaptu = iCaptu;
+        this.iCheque = iCheque;
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
@@ -42,7 +44,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         
     }
 
-    public void updateTable(int id) {
+    public void updateTable(String iCheque) {
         try {
             Statement st = con.createStatement();
             String query = "UPDATE " + "`" + lblTitulo.getText() + "`" + " SET "
@@ -55,8 +57,8 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
                     + "total = '" + txtTotal.getText() + "'" + ","
                     + "estado = '" + txtEstado.getText() + "'" + ","
                     + "costoPro = '" + txtCostoPro.getText() + "'" + ","
-                    + "notas = '" + txtNotas.getText() + "'"; // + "'" 
-            //+ "WHERE id = " + id;
+                    + "notas = '" + txtNotas.getText() + "'"  
+                    + "WHERE cheque = '" + iCheque + "'";
             
             System.out.println(query);
             st.execute(query);
@@ -285,9 +287,8 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        int id = 0;
-        updateTable(id);
+
+        updateTable(iCheque);
         this.proveedores.mostrarProveedor(this.iCaptu);
         System.out.println(iCaptu);
         

@@ -13,8 +13,9 @@ public class Proveedores extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
     datosFacturas dFacturas = new datosFacturas();
-
-    public Proveedores(String iCaptu, int id) {
+    String iCheque;
+    
+    public Proveedores(String iCaptu,String iSeleccion, String iCheque) {
         initComponents();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
@@ -43,7 +44,7 @@ public class Proveedores extends javax.swing.JFrame {
     }
 
     public void mostrarProveedor(String iCaptu) {
-        String[] columnas = {"id","cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
+        String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tTabla.setModel(modelo);
 
@@ -58,18 +59,17 @@ public class Proveedores extends javax.swing.JFrame {
             rs = st.executeQuery(a);
 
             while (rs.next()) {
-                String[] datos = new String[11];
-                datos[0] = rs.getString("id");
-                datos[1] = rs.getString("cheque");
-                datos[2] = rs.getString("factura");
-                datos[3] = rs.getString("fechaReg");
-                datos[4] = rs.getString("monto");
-                datos[5] = rs.getString("abono");
-                datos[6] = rs.getString("fechaAbono");
-                datos[7] = rs.getString("total");
-                datos[8] = rs.getString("estado");
-                datos[9] = rs.getString("costoPro");
-                datos[10] = rs.getString("total");
+                String[] datos = new String[10];
+                datos[0] = rs.getString("cheque");
+                datos[1] = rs.getString("factura");
+                datos[2] = rs.getString("fechaReg");
+                datos[3] = rs.getString("monto");
+                datos[4] = rs.getString("abono");
+                datos[5] = rs.getString("fechaAbono");
+                datos[6] = rs.getString("total");
+                datos[7] = rs.getString("estado");
+                datos[8] = rs.getString("costoPro");
+                datos[9] = rs.getString("total");
 
                 modelo.addRow(datos);
 
@@ -207,10 +207,10 @@ public class Proveedores extends javax.swing.JFrame {
 
         int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
         int columna = 0;
-        String iCaptu = (String) tTabla.getValueAt(fila, columna); //Se declara la variable 
-
-        String nombre = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
-        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, nombre, this);
+        String iCheque = (String) tTabla.getValueAt(fila, columna); //Se declara la variable 
+        
+        String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
+        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu,this, iCheque);
         nvoReg.setVisible(true);
 
     }//GEN-LAST:event_btnSelecionActionPerformed
@@ -218,7 +218,7 @@ public class Proveedores extends javax.swing.JFrame {
     private void btnSelecion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecion1ActionPerformed
         //Obtener informacion de la seleccion
         int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
-        int columna = 1;
+        int columna = 0;
         String iSelecion = (String) tTabla.getValueAt(fila, columna); //Se declara la variable 
         try {
             Statement st = con.createStatement();
@@ -229,7 +229,6 @@ public class Proveedores extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         mostrarProveedor(lblTitulo.getText()); //Actualiza tabla
     }//GEN-LAST:event_btnSelecion1ActionPerformed
 

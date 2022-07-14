@@ -7,22 +7,16 @@ import java.sql.Statement;
 public class prueba {
 
     public static void main(String[] args) {
-            
-            String variable = "a";
-            
-            String query = "CREATE TABLE `automocion`." + "`" + variable + "`" + "(`" 
-                    + variable + "`" + "VARCHAR(45) NOT NULL,"
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL," 
-                    + "`" + variable + "`" + "VARCHAR(45) NULL)" ;
-            System.out.println(query);
+        int id = 0;
+        int contador = 0;
+        while (contador < 10) {
+            System.out.println("Imprimo la linea: " + contador);
+            contador++;
+        }
+        while (id >= 0) {
+            System.out.println(id);
+                id++;
+            }
     }
 
 }  //

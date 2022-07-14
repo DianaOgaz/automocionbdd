@@ -13,9 +13,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
 
     datosProveedores datosP = new datosProveedores(); //Guardar datos
     Menu menuPrincipal;
-
     Connection con = conexion();
-    int id = 26;
+
 
     public NuevoProveedor(Menu menu) {
         this.menuPrincipal = menu;
@@ -41,8 +40,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
 
     }
 
-    public void actualizarDatos() { //Es la misma de mostrarDatos de ventana Menu 
-        String[] columnas = {"id","nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
+    public void actualizarDatos() {
+        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         //tMenu.setModel(modelo);
 
@@ -54,18 +53,17 @@ public class NuevoProveedor extends javax.swing.JFrame {
             rs = st.executeQuery("SELECT * FROM proveedores");
 
             while (rs.next()) {
-                String[] datos = new String[11];
-                datos[0] = rs.getString("id");
-                datos[1] = rs.getString("nombreCorp");
-                datos[2] = rs.getString("estado");
-                datos[3] = rs.getString("calle");
-                datos[4] = rs.getString("colonia");
-                datos[5] = rs.getString("cp");
-                datos[6] = rs.getString("rfc");
-                datos[7] = rs.getString("curp");
-                datos[8] = rs.getString("telefono");
-                datos[9] = rs.getString("celular");
-                datos[10] = rs.getString("notas");
+                String[] datos = new String[10];
+                datos[0] = rs.getString("nombreCorp");
+                datos[1] = rs.getString("estado");
+                datos[2] = rs.getString("calle");
+                datos[3] = rs.getString("colonia");
+                datos[4] = rs.getString("cp");
+                datos[5] = rs.getString("rfc");
+                datos[6] = rs.getString("curp");
+                datos[7] = rs.getString("telefono");
+                datos[8] = rs.getString("celular");
+                datos[9] = rs.getString("notas");
 
                 modelo.addRow(datos);
 
@@ -82,8 +80,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
         try {
             Statement st = con.createStatement();
             String query = "CREATE TABLE " + "`" + nombre + "`" + "(`"
-                    + "id" + "`" + "VARCHAR(45) NOT NULL,"  
-                    + "`" + "cheque" + "`" + "VARCHAR(45) NULL,"
+                    + "cheque" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "factura" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "fechaReg" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "monto" + "`" + "VARCHAR(45) NULL,"
@@ -100,7 +97,6 @@ public class NuevoProveedor extends javax.swing.JFrame {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -319,20 +315,16 @@ public class NuevoProveedor extends javax.swing.JFrame {
         String notas = txtNotas.getText();
         String rfc = txtRFC.getText();
         String telefono = txtTelefono.getText();
-        
-        id++;
-        
-        try {
-            Statement st = con.createStatement();
-            String query = "INSERT INTO proveedores (id,nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + id + "\",\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
-            st.execute(query);
 
+        try {          
+            Statement st = con.createStatement();
+            String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
+            st.execute(query);
+            
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
-        
         crearTabla();//Crea la tabla en la base de datos
         this.menuPrincipal.mostrarDatos(); //Actualiza la tabla
         this.setVisible(false);
