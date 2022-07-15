@@ -223,7 +223,7 @@ public class Proveedores extends javax.swing.JFrame {
         int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
         String iCheque = (String) tTabla.getValueAt(fila, 0); //Se declara la variable 
              
-       /* int columna1 = 1;
+      int columna1 = 1;
         int columna2 = 2;
         int columna3 = 3;
         int columna4 = 4;
@@ -243,11 +243,9 @@ public class Proveedores extends javax.swing.JFrame {
         String iCostoPro = (String) tTabla.getValueAt(fila, columna8); 
         String iNotas = (String) tTabla.getValueAt(fila, columna9); 
 
-        */
-       
         String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
-        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, this, iCheque);
-        //,iFactura,iFechaReg,iMonto,iAbono,iFechaAbono,iTotal,iEstado,iCostoPro,iNotas
+        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, this, iCheque,iFactura,iFechaReg,iMonto,iAbono,iFechaAbono,iTotal,iEstado,iCostoPro,iNotas);
+        //
         nvoReg.setVisible(true);
        
     }//GEN-LAST:event_btnSelecionActionPerformed

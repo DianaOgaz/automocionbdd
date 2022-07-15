@@ -25,18 +25,16 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     String iCostoPro;
     String iNotas;
 
-    public EditarRegistroProveedores(String iCaptu, Proveedores prov, String iCheque) {
-
-        //,String iFactura,String iFechaReg,String iMonto,String iAbono,String iFechaAbono,String iTotal,String iEstado,String iCostoPro,String iNotas
-        
+    public EditarRegistroProveedores(String iCaptu, Proveedores prov, String iCheque,String iFactura,String iFechaReg,String iMonto,String iAbono,String iFechaAbono,String iTotal,String iEstado,String iCostoPro,String iNotas) {
+        initComponents();
+    
         this.proveedores = prov;
         this.iCaptu = iCaptu;
-        System.out.println(iCaptu);
-        
+        System.out.println(iCheque + "--------------");
+
         this.iCheque = iCheque;
-        //txtCheque.setText(iCheque);
-        
-        /*
+        txtCheque.setText(iCheque);
+   
         this.iFactura = iFactura;
         txtFactura.setText(iFactura);
         
@@ -63,9 +61,6 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         
         this.iNotas = iNotas;
         txtNotas.setText(iNotas);
-        */
-        
-        initComponents();
 
         this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
         this.setResizable(true);

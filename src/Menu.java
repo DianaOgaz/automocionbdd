@@ -218,7 +218,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         //JOptionPane.showMessageDialog(null, "Se borrarán todos los datos del proveedor", "¿Está seguro?", JOptionPane.YES_NO_OPTION);
-        int resp = JOptionPane.showConfirmDialog(null, "Se va a eliminar la tabla ", "Alerta!", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el proveedor? ", "Alerta!", JOptionPane.YES_NO_OPTION);
 
         if (resp == 0) {//Borra la tabla
             //Obtener informacion de la seleccion
