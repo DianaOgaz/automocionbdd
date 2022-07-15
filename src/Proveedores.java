@@ -13,37 +13,25 @@ import javax.swing.table.DefaultTableModel;
 public class Proveedores extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
-    
-    String iCheque;
-    /*String iFactura;
-    String iFechaReg;
-    String iMonto;
-    String iAbono;
-    String iFechaAbono;
-    String iTotal;
-    String iEstado;
-    String iCostoPro;
-    String iNotas;*/
-
+  
     public Proveedores(String iCaptu, String iSeleccion, String iCheque) {
         initComponents();
+        conexion();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
-        conexion();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
 
         //el contructor recibe una variable y se puede compartir solamente con el mismo tipo de dato.
-        mostrarProveedor(iCaptu);
-        lblTitulo.setText(iCaptu);
+        mostrarProveedor(iCaptu);//Recarga la tabla con la informacion del nombre del proveedor seleccionado
+        lblTitulo.setText(iCaptu);//coloca el nombre del proveedor seleccionado
 
     }
 
-    private Proveedores() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private Proveedores() {//Metodo constructor sin parametros
     }
 
-    public Connection conexion() {
+    public Connection conexion() { //realiza la conexion de la base de datos
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
@@ -56,7 +44,7 @@ public class Proveedores extends javax.swing.JFrame {
 
     }
 
-    public void mostrarProveedor(String iCaptu) {
+    public void mostrarProveedor(String iCaptu) {//Llama los datos de la tabla proveedor para mostrarlos
         String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tTabla.setModel(modelo);

@@ -13,8 +13,8 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     String iCaptu;
     Proveedores proveedores;
 
-    //Variables para guardar 
-    String iCheque; //Cheque es utilizado para guardar el nombre del cheque y usarlo como PK 
+    //Variables para guardar los datos de registros
+    String iCheque; 
     String iFactura;
     String iFechaReg;
     String iMonto;
@@ -30,7 +30,6 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     
         this.proveedores = prov;
         this.iCaptu = iCaptu;
-        System.out.println(iCheque + "--------------");
 
         this.iCheque = iCheque;
         txtCheque.setText(iCheque);

@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class Menu extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
+
     public Menu() {
         initComponents();
         conexion(); //Crea la conexion 
@@ -118,6 +119,11 @@ public class Menu extends javax.swing.JFrame {
         tMenu.setAutoCreateRowSorter(true);
         tMenu.setBackground(new java.awt.Color(204, 204, 204));
         tMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tMenuMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tMenu);
 
         btnSelecionar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -149,7 +155,6 @@ public class Menu extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1115, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,11 +162,12 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57)
                         .addComponent(btnBorrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 484, Short.MAX_VALUE)
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -228,10 +234,25 @@ public class Menu extends javax.swing.JFrame {
             borrarTablas(iCaptu); //borra las tablas y el registro en proveedores de acuerdo con el nombre
             System.out.println("SI");
 
-        }else if (resp == 1) {//No hacer nada en caso de elegir NO          
+        } else if (resp == 1) {//No hacer nada en caso de elegir NO          
         }
 
     }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void tMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tMenuMouseClicked
+    
+         //Obtener informacion de la seleccion
+        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
+        int columna = 0;
+        String iAchu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
+        
+         //intancia para mostrar ventana de proveedores
+        Proveedores vProveedores = new Proveedores(iAchu, "", "");
+        vProveedores.setVisible(true);
+
+        
+        JOptionPane.showMessageDialog(null, iAchu, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_tMenuMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
