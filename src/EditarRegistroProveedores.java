@@ -8,30 +8,77 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditarRegistroProveedores extends javax.swing.JFrame {
-    
+
     Connection con = conexion();
     String iCaptu;
     Proveedores proveedores;
-    String iCheque;
-  
-    
+
+    //Variables para guardar 
+    String iCheque; //Cheque es utilizado para guardar el nombre del cheque y usarlo como PK 
+    String iFactura;
+    String iFechaReg;
+    String iMonto;
+    String iAbono;
+    String iFechaAbono;
+    String iTotal;
+    String iEstado;
+    String iCostoPro;
+    String iNotas;
+
     public EditarRegistroProveedores(String iCaptu, Proveedores prov, String iCheque) {
-        this.proveedores = prov;       
-        initComponents();
+
+        //,String iFactura,String iFechaReg,String iMonto,String iAbono,String iFechaAbono,String iTotal,String iEstado,String iCostoPro,String iNotas
+        
+        this.proveedores = prov;
         this.iCaptu = iCaptu;
+        System.out.println(iCaptu);
+        
         this.iCheque = iCheque;
+        //txtCheque.setText(iCheque);
+        
+        /*
+        this.iFactura = iFactura;
+        txtFactura.setText(iFactura);
+        
+        this.iFechaReg = iFechaReg;
+        txtFechaReg.setText(iFechaReg);
+        
+        this.iMonto = iMonto;
+        txtMonto.setText(iMonto);
+        
+        this.iAbono = iAbono;
+        txtAbono.setText(iAbono);
+        
+        this.iFechaAbono = iFechaAbono;
+        txtFechaAbono.setText(iFechaAbono);
+        
+        this.iTotal = iTotal;
+        txtTotal.setText(iTotal);
+        
+        this.iEstado = iEstado;
+        txtEstado.setText(iEstado);
+        
+        this.iCostoPro = iCostoPro;
+        txtCostoPro.setText(iCostoPro);
+        
+        this.iNotas = iNotas;
+        txtNotas.setText(iNotas);
+        */
+        
+        initComponents();
+
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
-        
-        lblTitulo.setText(iCaptu);
-        
+        lblTitulo.setText(iCaptu); //Muestra el nombre del proveedor en el titulo
+
     }
-    
+
     private EditarRegistroProveedores() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     public Connection conexion() {
         Connection con = null;
         try {
@@ -41,10 +88,10 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
             System.out.println("Conexion fallida " + ex);
         }
         return con;
-        
+
     }
 
-    public void updateTable(String iCheque) {
+    public void updateTable(String iCheque) { //Actualiza los datos del registro actual itilizando cheque com id y PK
         try {
             Statement st = con.createStatement();
             String query = "UPDATE " + "`" + lblTitulo.getText() + "`" + " SET "
@@ -57,17 +104,17 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
                     + "total = '" + txtTotal.getText() + "'" + ","
                     + "estado = '" + txtEstado.getText() + "'" + ","
                     + "costoPro = '" + txtCostoPro.getText() + "'" + ","
-                    + "notas = '" + txtNotas.getText() + "'"  
+                    + "notas = '" + txtNotas.getText() + "'"
                     + "WHERE cheque = '" + iCheque + "'";
-            
+
             System.out.println(query);
             st.execute(query);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -289,13 +336,12 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         updateTable(iCheque);
-        this.proveedores.mostrarProveedor(this.iCaptu);
+        this.proveedores.mostrarProveedor(this.iCaptu); //Actualiza la tabla del proveedor con sus registros
         System.out.println(iCaptu);
-        
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
