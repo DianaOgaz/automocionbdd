@@ -7,21 +7,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class NuevoProveedor extends javax.swing.JFrame {
 
-    datosProveedores datosP = new datosProveedores(); //Guardar datos
     Menu menuPrincipal;
     Connection con = conexion();
-
 
     public NuevoProveedor(Menu menu) {
         this.menuPrincipal = menu;
         initComponents();
+
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
     }
 
     public NuevoProveedor() {
@@ -35,6 +37,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
             System.out.println("Conexion lograda");
         } catch (SQLException ex) {
             System.out.println("Conexion fallida " + ex);
+            JOptionPane.showMessageDialog(null, "Fallo conexión a base de datos", "ERROR", JOptionPane.ERROR_MESSAGE);
+
         }
         return con;
 
@@ -71,6 +75,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             System.out.println("actualizarDatos.NuevoProveedor = " + ex);
+            JOptionPane.showMessageDialog(null, "No se encontró tabla Proveedores", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -95,6 +100,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se creó tabla correctamente", "ERROR", JOptionPane.ERROR_MESSAGE);
+
         }
     }
 
@@ -316,13 +323,15 @@ public class NuevoProveedor extends javax.swing.JFrame {
         String rfc = txtRFC.getText();
         String telefono = txtTelefono.getText();
 
-        try {          
+        try {
             Statement st = con.createStatement();
             String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
             st.execute(query);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se creó registro en Proveedores", "ERROR", JOptionPane.ERROR_MESSAGE);
+
         }
 
         crearTabla();//Crea la tabla en la base de datos
@@ -332,6 +341,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearActionPerformed
 
     public static void main(String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new NuevoProveedor().setVisible(true);

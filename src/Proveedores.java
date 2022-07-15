@@ -7,20 +7,31 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Proveedores extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
-    datosFacturas dFacturas = new datosFacturas();
-    String iCheque;
     
-    public Proveedores(String iCaptu,String iSeleccion, String iCheque) {
+    String iCheque;
+    /*String iFactura;
+    String iFechaReg;
+    String iMonto;
+    String iAbono;
+    String iFechaAbono;
+    String iTotal;
+    String iEstado;
+    String iCostoPro;
+    String iNotas;*/
+
+    public Proveedores(String iCaptu, String iSeleccion, String iCheque) {
         initComponents();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
         conexion();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
 
         //el contructor recibe una variable y se puede compartir solamente con el mismo tipo de dato.
         mostrarProveedor(iCaptu);
@@ -38,6 +49,8 @@ public class Proveedores extends javax.swing.JFrame {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
         } catch (SQLException ex) {
             System.out.println("Conexion fallida " + ex);
+            JOptionPane.showMessageDialog(null, "Sin conexión a base de datos", "ERROR", JOptionPane.ERROR_MESSAGE);
+
         }
         return con;
 
@@ -77,6 +90,8 @@ public class Proveedores extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             System.out.println("Fallo query de proveedores = " + ex);
+            JOptionPane.showMessageDialog(null, "No se encontró tabla " + iCaptu, "ERROR", JOptionPane.ERROR_MESSAGE);
+
         }
 
     }
@@ -206,13 +221,35 @@ public class Proveedores extends javax.swing.JFrame {
     private void btnSelecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionActionPerformed
 
         int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
-        int columna = 0;
-        String iCheque = (String) tTabla.getValueAt(fila, columna); //Se declara la variable 
-        
-        String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
-        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu,this, iCheque);
-        nvoReg.setVisible(true);
+        String iCheque = (String) tTabla.getValueAt(fila, 0); //Se declara la variable 
+             
+       /* int columna1 = 1;
+        int columna2 = 2;
+        int columna3 = 3;
+        int columna4 = 4;
+        int columna5 = 5;
+        int columna6 = 6;
+        int columna7 = 7;
+        int columna8 = 8;
+        int columna9 = 9;
 
+        String iFactura = (String) tTabla.getValueAt(fila, columna1); 
+        String iFechaReg = (String) tTabla.getValueAt(fila, columna2); 
+        String iMonto = (String) tTabla.getValueAt(fila, columna3); 
+        String iAbono = (String) tTabla.getValueAt(fila, columna4); 
+        String iFechaAbono = (String) tTabla.getValueAt(fila, columna5); 
+        String iTotal = (String) tTabla.getValueAt(fila, columna6); 
+        String iEstado = (String) tTabla.getValueAt(fila, columna7); 
+        String iCostoPro = (String) tTabla.getValueAt(fila, columna8); 
+        String iNotas = (String) tTabla.getValueAt(fila, columna9); 
+
+        */
+       
+        String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
+        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, this, iCheque);
+        //,iFactura,iFechaReg,iMonto,iAbono,iFechaAbono,iTotal,iEstado,iCostoPro,iNotas
+        nvoReg.setVisible(true);
+       
     }//GEN-LAST:event_btnSelecionActionPerformed
 
     private void btnSelecion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecion1ActionPerformed

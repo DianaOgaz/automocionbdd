@@ -8,25 +8,28 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AgregarRegistroProveedores extends javax.swing.JFrame {
 
     Connection con = conexion();
     Proveedores proveedores;
-    String iCaptu;
+    String iCaptu; //guarda el nombre del proveedor
 
     public AgregarRegistroProveedores(Proveedores prov, String iCaptu) {
         this.proveedores = prov;
         this.iCaptu = iCaptu;
 
         initComponents();
+        
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
 
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
 
-        lblTitulo.setText(iCaptu);
+        lblTitulo.setText(iCaptu);//coloca el nombre del proveedor en la ventana
 
     }
 
@@ -41,45 +44,9 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
             System.out.println("Conexion lograda");
         } catch (SQLException ex) {
             System.out.println("Conexion fallida " + ex);
+            JOptionPane.showMessageDialog(null, "Fallo conexión a base de datos", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return con;
-
-    }
-
-    public void mostrarProveedor(String iCaptu) {
-        String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
-        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-        // tTabla.setModel(modelo);
-
-        Statement st;
-        ResultSet rs;
-
-        String a = "SELECT * FROM " + "`" + iCaptu + "`";
-        System.out.println(a);
-
-        try {
-            st = con.createStatement();
-            rs = st.executeQuery(a);
-
-            while (rs.next()) {
-                String[] datos = new String[10];
-                datos[0] = rs.getString("cheque");
-                datos[1] = rs.getString("factura");
-                datos[2] = rs.getString("fechaReg");
-                datos[3] = rs.getString("monto");
-                datos[4] = rs.getString("abono");
-                datos[5] = rs.getString("fechaAbono");
-                datos[6] = rs.getString("total");
-                datos[7] = rs.getString("estado");
-                datos[8] = rs.getString("costoPro");
-                datos[9] = rs.getString("total");
-
-                modelo.addRow(datos);
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("Fallo query de proveedores = " + ex);
-        }
 
     }
 
@@ -322,7 +289,6 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         String notas = txtNotas.getText();
 
         try {
-
             Statement st = con.createStatement();
             String query = "INSERT INTO " + lblTitulo.getText() + "(cheque,factura,fechaReg,monto,abono,fechaAbono,total,estado,costoPro,notas) VALUES (\"" + cheque + "\",\"" + factura + "\",\"" + fechaReg + "\",\"" + monto + "\",\"" + abono + "\",\"" + fechaAbono + "\", \"" + total + "\",\"" + estado + "\",\"" + costoPro + "\",\"" + notas + "\")";
             System.out.println(query);
@@ -330,7 +296,7 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.proveedores.mostrarProveedor(this.iCaptu); //Llama a proveedores y se lleva a iCaptu
+        this.proveedores.mostrarProveedor(this.iCaptu); //Llama a proveedores y se lleva a iCaptu para mostrar tabla de proveedor seleccionado
         this.setVisible(false);
 
     }//GEN-LAST:event_btnGuardarActionPerformed

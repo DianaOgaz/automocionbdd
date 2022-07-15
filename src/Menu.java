@@ -7,17 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Menu extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
-    datosProveedores datosProv = new datosProveedores();
-
     public Menu() {
         initComponents();
-        conexion();
-        mostrarDatos();
+        conexion(); //Crea la conexion 
+        mostrarDatos();//Actualiza la tabla de datos
         this.setVisible(true);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
@@ -30,11 +29,12 @@ public class Menu extends javax.swing.JFrame {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
         } catch (SQLException ex) {
             System.out.println("Conexion fallida " + ex);
+            JOptionPane.showMessageDialog(null, "Sin conexión a base de datos", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return con;
     }
 
-    public void mostrarDatos() {
+    public void mostrarDatos() {//Muestra la tabla
         String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tMenu.setModel(modelo);
@@ -65,11 +65,13 @@ public class Menu extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             System.out.println("Fallo query Menu = " + ex);
-        }
+            JOptionPane.showMessageDialog(null, "No se encontraron proveedores", "ERROR", JOptionPane.ERROR_MESSAGE);
+        };
 
     }
-    
-    public void borrarTablas(String iCaptu){
+
+    public void borrarTablas(String iCaptu) {
+
         try {
             Statement st = con.createStatement();
             String query = "DELETE FROM proveedores WHERE nombreCorp = '" + iCaptu + "'";
@@ -78,6 +80,7 @@ public class Menu extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+
         }
         try {
             Statement st = con.createStatement();
@@ -88,7 +91,7 @@ public class Menu extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         mostrarDatos(); //Actualiza la tabla 
     }
 
@@ -196,7 +199,7 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-      
+
         NuevoProveedor nProveedor = new NuevoProveedor(this);
         nProveedor.setVisible(true);
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -209,16 +212,24 @@ public class Menu extends javax.swing.JFrame {
         String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
 
         //intancia para mostrar ventana de proveedores
-        Proveedores vProveedores = new Proveedores(iCaptu,"","");
+        Proveedores vProveedores = new Proveedores(iCaptu, "", "");
         vProveedores.setVisible(true);
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        //Obtener informacion de la seleccion
-        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
-        int columna = 0;
-        String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable        
-        borrarTablas(iCaptu);
+        //JOptionPane.showMessageDialog(null, "Se borrarán todos los datos del proveedor", "¿Está seguro?", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "Se va a eliminar la tabla ", "Alerta!", JOptionPane.YES_NO_OPTION);
+
+        if (resp == 0) {//Borra la tabla
+            //Obtener informacion de la seleccion
+            int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
+            int columna = 0; //obtiene el nombre
+            String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable        
+            borrarTablas(iCaptu); //borra las tablas y el registro en proveedores de acuerdo con el nombre
+            System.out.println("SI");
+
+        }else if (resp == 1) {//No hacer nada en caso de elegir NO          
+        }
 
     }//GEN-LAST:event_btnBorrarActionPerformed
 
