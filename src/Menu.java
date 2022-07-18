@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class Menu extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
+
     public Menu() {
         initComponents();
         conexion(); //Crea la conexion 
@@ -103,7 +104,6 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tMenu = new javax.swing.JTable();
-        btnSelecionar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
 
@@ -118,15 +118,12 @@ public class Menu extends javax.swing.JFrame {
         tMenu.setAutoCreateRowSorter(true);
         tMenu.setBackground(new java.awt.Color(204, 204, 204));
         tMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(tMenu);
-
-        btnSelecionar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        btnSelecionar.setText("Seleccionar Proveedor");
-        btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelecionarActionPerformed(evt);
+        tMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tMenuMouseClicked(evt);
             }
         });
+        jScrollPane1.setViewportView(tMenu);
 
         btnNuevo.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnNuevo.setText("Agregar Nuevo Proveedor");
@@ -149,19 +146,17 @@ public class Menu extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1115, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(btnBorrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -172,7 +167,6 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSelecionar)
                     .addComponent(btnBorrar)
                     .addComponent(btnNuevo))
                 .addContainerGap())
@@ -204,21 +198,9 @@ public class Menu extends javax.swing.JFrame {
         nProveedor.setVisible(true);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-
-        //Obtener informacion de la seleccion
-        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
-        int columna = 0;
-        String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
-
-        //intancia para mostrar ventana de proveedores
-        Proveedores vProveedores = new Proveedores(iCaptu, "", "");
-        vProveedores.setVisible(true);
-    }//GEN-LAST:event_btnSelecionarActionPerformed
-
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         //JOptionPane.showMessageDialog(null, "Se borrarán todos los datos del proveedor", "¿Está seguro?", JOptionPane.YES_NO_OPTION);
-        int resp = JOptionPane.showConfirmDialog(null, "Se va a eliminar la tabla ", "Alerta!", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el proveedor? ", "Alerta!", JOptionPane.YES_NO_OPTION);
 
         if (resp == 0) {//Borra la tabla
             //Obtener informacion de la seleccion
@@ -228,10 +210,21 @@ public class Menu extends javax.swing.JFrame {
             borrarTablas(iCaptu); //borra las tablas y el registro en proveedores de acuerdo con el nombre
             System.out.println("SI");
 
-        }else if (resp == 1) {//No hacer nada en caso de elegir NO          
+        } else if (resp == 1) {//No hacer nada en caso de elegir NO          
         }
 
     }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void tMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tMenuMouseClicked
+        //Obtener informacion de la seleccion
+        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
+        int columna = 0;
+        String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable 
+
+        //intancia para mostrar ventana de proveedores
+        Proveedores vProveedores = new Proveedores(iCaptu, "", "");
+        vProveedores.setVisible(true);
+    }//GEN-LAST:event_tMenuMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -269,7 +262,6 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnSelecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

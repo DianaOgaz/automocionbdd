@@ -13,8 +13,8 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     String iCaptu;
     Proveedores proveedores;
 
-    //Variables para guardar 
-    String iCheque; //Cheque es utilizado para guardar el nombre del cheque y usarlo como PK 
+    //Variables para guardar los datos de registros
+    String iCheque; 
     String iFactura;
     String iFechaReg;
     String iMonto;
@@ -25,18 +25,15 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     String iCostoPro;
     String iNotas;
 
-    public EditarRegistroProveedores(String iCaptu, Proveedores prov, String iCheque) {
-
-        //,String iFactura,String iFechaReg,String iMonto,String iAbono,String iFechaAbono,String iTotal,String iEstado,String iCostoPro,String iNotas
-        
+    public EditarRegistroProveedores(String iCaptu, Proveedores prov, String iCheque,String iFactura,String iFechaReg,String iMonto,String iAbono,String iFechaAbono,String iTotal,String iEstado,String iCostoPro,String iNotas) {
+        initComponents();
+    
         this.proveedores = prov;
         this.iCaptu = iCaptu;
-        System.out.println(iCaptu);
-        
+
         this.iCheque = iCheque;
-        //txtCheque.setText(iCheque);
-        
-        /*
+        txtCheque.setText(iCheque);
+   
         this.iFactura = iFactura;
         txtFactura.setText(iFactura);
         
@@ -63,9 +60,6 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         
         this.iNotas = iNotas;
         txtNotas.setText(iNotas);
-        */
-        
-        initComponents();
 
         this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
         this.setResizable(true);

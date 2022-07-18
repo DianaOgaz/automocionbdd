@@ -13,37 +13,25 @@ import javax.swing.table.DefaultTableModel;
 public class Proveedores extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
-    
-    String iCheque;
-    /*String iFactura;
-    String iFechaReg;
-    String iMonto;
-    String iAbono;
-    String iFechaAbono;
-    String iTotal;
-    String iEstado;
-    String iCostoPro;
-    String iNotas;*/
 
     public Proveedores(String iCaptu, String iSeleccion, String iCheque) {
         initComponents();
+        conexion();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
-        conexion();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
 
         //el contructor recibe una variable y se puede compartir solamente con el mismo tipo de dato.
-        mostrarProveedor(iCaptu);
-        lblTitulo.setText(iCaptu);
+        mostrarProveedor(iCaptu);//Recarga la tabla con la informacion del nombre del proveedor seleccionado
+        lblTitulo.setText(iCaptu);//coloca el nombre del proveedor seleccionado
 
     }
 
-    private Proveedores() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private Proveedores() {//Metodo constructor sin parametros
     }
 
-    public Connection conexion() {
+    public Connection conexion() { //realiza la conexion de la base de datos
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/automocion", "root", "root");
@@ -56,7 +44,7 @@ public class Proveedores extends javax.swing.JFrame {
 
     }
 
-    public void mostrarProveedor(String iCaptu) {
+    public void mostrarProveedor(String iCaptu) {//Llama los datos de la tabla proveedor para mostrarlos
         String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tTabla.setModel(modelo);
@@ -104,9 +92,10 @@ public class Proveedores extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tTabla = new javax.swing.JTable();
-        btnSelecion = new javax.swing.JButton();
         btnAgegar = new javax.swing.JButton();
         btnSelecion1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cmbox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,6 +116,11 @@ public class Proveedores extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tTabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tTablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tTabla);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -136,7 +130,7 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblTitulo)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -148,17 +142,9 @@ public class Proveedores extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        btnSelecion.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        btnSelecion.setText("Editar Seleccion");
-        btnSelecion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelecionActionPerformed(evt);
-            }
-        });
 
         btnAgegar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnAgegar.setText("Agregar Nuevo Registro");
@@ -176,36 +162,46 @@ public class Proveedores extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel1.setText("Busqueda");
+
+        cmbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar Todo", "PAGADO", "NO PAGADO" }));
+        cmbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmboxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(btnSelecion, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnSelecion1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
-                        .addComponent(btnAgegar, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSelecion1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbox, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(btnAgegar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAgegar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSelecion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSelecion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgegar)
+                    .addComponent(btnSelecion1)
+                    .addComponent(cmbox, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -217,40 +213,6 @@ public class Proveedores extends javax.swing.JFrame {
         registroProv.setVisible(true);
 
     }//GEN-LAST:event_btnAgegarActionPerformed
-
-    private void btnSelecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionActionPerformed
-
-        int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
-        String iCheque = (String) tTabla.getValueAt(fila, 0); //Se declara la variable 
-             
-       /* int columna1 = 1;
-        int columna2 = 2;
-        int columna3 = 3;
-        int columna4 = 4;
-        int columna5 = 5;
-        int columna6 = 6;
-        int columna7 = 7;
-        int columna8 = 8;
-        int columna9 = 9;
-
-        String iFactura = (String) tTabla.getValueAt(fila, columna1); 
-        String iFechaReg = (String) tTabla.getValueAt(fila, columna2); 
-        String iMonto = (String) tTabla.getValueAt(fila, columna3); 
-        String iAbono = (String) tTabla.getValueAt(fila, columna4); 
-        String iFechaAbono = (String) tTabla.getValueAt(fila, columna5); 
-        String iTotal = (String) tTabla.getValueAt(fila, columna6); 
-        String iEstado = (String) tTabla.getValueAt(fila, columna7); 
-        String iCostoPro = (String) tTabla.getValueAt(fila, columna8); 
-        String iNotas = (String) tTabla.getValueAt(fila, columna9); 
-
-        */
-       
-        String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
-        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, this, iCheque);
-        //,iFactura,iFechaReg,iMonto,iAbono,iFechaAbono,iTotal,iEstado,iCostoPro,iNotas
-        nvoReg.setVisible(true);
-       
-    }//GEN-LAST:event_btnSelecionActionPerformed
 
     private void btnSelecion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecion1ActionPerformed
         //Obtener informacion de la seleccion
@@ -269,7 +231,130 @@ public class Proveedores extends javax.swing.JFrame {
         mostrarProveedor(lblTitulo.getText()); //Actualiza tabla
     }//GEN-LAST:event_btnSelecion1ActionPerformed
 
-    public static void main(String args[]) {
+    private void tTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tTablaMouseClicked
+
+        int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
+        String iCheque = (String) tTabla.getValueAt(fila, 0); //Se declara la variable 
+
+        int columna1 = 1;
+        int columna2 = 2;
+        int columna3 = 3;
+        int columna4 = 4;
+        int columna5 = 5;
+        int columna6 = 6;
+        int columna7 = 7;
+        int columna8 = 8;
+        int columna9 = 9;
+
+        String iFactura = (String) tTabla.getValueAt(fila, columna1);
+        String iFechaReg = (String) tTabla.getValueAt(fila, columna2);
+        String iMonto = (String) tTabla.getValueAt(fila, columna3);
+        String iAbono = (String) tTabla.getValueAt(fila, columna4);
+        String iFechaAbono = (String) tTabla.getValueAt(fila, columna5);
+        String iTotal = (String) tTabla.getValueAt(fila, columna6);
+        String iEstado = (String) tTabla.getValueAt(fila, columna7);
+        String iCostoPro = (String) tTabla.getValueAt(fila, columna8);
+        String iNotas = (String) tTabla.getValueAt(fila, columna9);
+
+        String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
+        EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, this, iCheque, iFactura, iFechaReg, iMonto, iAbono, iFechaAbono, iTotal, iEstado, iCostoPro, iNotas);
+        //
+        nvoReg.setVisible(true);
+    }//GEN-LAST:event_tTablaMouseClicked
+
+    private void cmboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmboxActionPerformed
+        String seleccion = (String) cmbox.getSelectedItem();
+        System.out.println(seleccion);
+        String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
+
+        if (seleccion == "PAGADO") {
+            String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
+            DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+            tTabla.setModel(modelo);
+
+            Statement st;
+            ResultSet rs;
+
+            String a = "SELECT * FROM " + "`" + iCaptu + "`" + "WHERE estado = 'PAGADO'";
+            System.out.println(a);
+
+            try {
+                st = con.createStatement();
+                rs = st.executeQuery(a);
+
+                while (rs.next()) {
+                    String[] datos = new String[10];
+                    datos[0] = rs.getString("cheque");
+                    datos[1] = rs.getString("factura");
+                    datos[2] = rs.getString("fechaReg");
+                    datos[3] = rs.getString("monto");
+                    datos[4] = rs.getString("abono");
+                    datos[5] = rs.getString("fechaAbono");
+                    datos[6] = rs.getString("total");
+                    datos[7] = rs.getString("estado");
+                    datos[8] = rs.getString("costoPro");
+                    datos[9] = rs.getString("total");
+
+                    modelo.addRow(datos);
+
+                }
+
+            } catch (SQLException ex) {
+                System.out.println("Fallo query de proveedores = " + ex);
+                JOptionPane.showMessageDialog(null, "No se encontró tabla " + iCaptu, "ERROR", JOptionPane.ERROR_MESSAGE);
+
+            }
+        } else if (seleccion == "NO PAGADO") {
+            String[] columnas = {"cheque", "factura", "fechaReg", "monto", "abono", "fechaAbono", "total", "estado", "costoPro", "total"};
+            DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+            tTabla.setModel(modelo);
+
+            Statement st;
+            ResultSet rs;
+
+            String a = "SELECT * FROM " + "`" + iCaptu + "`" + "WHERE estado = 'NO PAGADO'";
+            System.out.println(a);
+
+            try {
+                st = con.createStatement();
+                rs = st.executeQuery(a);
+
+                while (rs.next()) {
+                    String[] datos = new String[10];
+                    datos[0] = rs.getString("cheque");
+                    datos[1] = rs.getString("factura");
+                    datos[2] = rs.getString("fechaReg");
+                    datos[3] = rs.getString("monto");
+                    datos[4] = rs.getString("abono");
+                    datos[5] = rs.getString("fechaAbono");
+                    datos[6] = rs.getString("total");
+                    datos[7] = rs.getString("estado");
+                    datos[8] = rs.getString("costoPro");
+                    datos[9] = rs.getString("total");
+
+                    modelo.addRow(datos);
+
+                }
+
+            } catch (SQLException ex) {
+                System.out.println("Fallo query de proveedores = " + ex);
+                JOptionPane.showMessageDialog(null, "No se encontró tabla " + iCaptu, "ERROR", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+    }
+    else if (seleccion
+
+    
+        == "--seleccionar--") {
+
+            mostrarProveedor(iCaptu);
+    }
+
+
+    }//GEN-LAST:event_cmboxActionPerformed
+
+public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -280,8 +365,9 @@ public class Proveedores extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgegar;
-    private javax.swing.JButton btnSelecion;
     private javax.swing.JButton btnSelecion1;
+    private javax.swing.JComboBox<String> cmbox;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;

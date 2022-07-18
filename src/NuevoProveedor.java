@@ -85,7 +85,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
         try {
             Statement st = con.createStatement();
             String query = "CREATE TABLE " + "`" + nombre + "`" + "(`"
-                    + "cheque" + "`" + "VARCHAR(45) NULL,"
+                    + "cheque" + "`" + "VARCHAR(45) NOT NULL,"
                     + "`" + "factura" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "fechaReg" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "monto" + "`" + "VARCHAR(45) NULL,"
@@ -94,7 +94,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
                     + "`" + "total" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "estado" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "costoPro" + "`" + "VARCHAR(45) NULL,"
-                    + "`" + "notas" + "`" + "VARCHAR(45) NULL)";
+                    + "`" + "notas" + "`" + "VARCHAR(45) NULL, PRIMARY KEY (`cheque`))";
             System.out.println(query);
             st.execute(query);
 
@@ -328,15 +328,16 @@ public class NuevoProveedor extends javax.swing.JFrame {
             String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
             st.execute(query);
 
+            crearTabla();//Crea la tabla en la base de datos
+            this.menuPrincipal.mostrarDatos(); //Actualiza la tabla
+            this.setVisible(false);
+
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "No se creó registro en Proveedores", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nombre duplicado. Cambie nombre", "ERROR", JOptionPane.ERROR_MESSAGE);
 
         }
 
-        crearTabla();//Crea la tabla en la base de datos
-        this.menuPrincipal.mostrarDatos(); //Actualiza la tabla
-        this.setVisible(false);
 
     }//GEN-LAST:event_btnCrearActionPerformed
 
