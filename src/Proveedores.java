@@ -15,7 +15,7 @@ public class Proveedores extends javax.swing.JFrame {
     Connection con = conexion(); //conexion con la BDD
 
     public Proveedores(String iCaptu, String iSeleccion, String iCheque) {
-        initComponents();
+        initComponents();//inicializa los componentes, a partir de aqui se codifica
         conexion();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
@@ -343,10 +343,7 @@ public class Proveedores extends javax.swing.JFrame {
             }
 
     }
-    else if (seleccion
-
-    
-        == "--seleccionar--") {
+    else if (seleccion== "Mostrar Todo") {
 
             mostrarProveedor(iCaptu);
     }
