@@ -295,6 +295,7 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
             st.execute(query);
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Cheque duplicado. Ingrese otro cheque", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         this.proveedores.mostrarProveedor(this.iCaptu); //Llama a proveedores y se lleva a iCaptu para mostrar tabla de proveedor seleccionado
         this.setVisible(false);
