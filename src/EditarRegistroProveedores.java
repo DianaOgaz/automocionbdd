@@ -53,7 +53,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         txtTotal.setText(iTotal);
         
         this.iEstado = iEstado;
-        txtEstado.setText(iEstado);
+        cboxEstado.setSelectedItem(iEstado);
         
         this.iCostoPro = iCostoPro;
         txtCostoPro.setText(iCostoPro);
@@ -96,7 +96,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
                     + "abono = '" + txtAbono.getText() + "'" + ","
                     + "fechaAbono = '" + txtFechaAbono.getText() + "'" + ","
                     + "total = '" + txtTotal.getText() + "'" + ","
-                    + "estado = '" + txtEstado.getText() + "'" + ","
+                    + "estado = '" + txtTotal.getText() + "'" + ","
                     + "costoPro = '" + txtCostoPro.getText() + "'" + ","
                     + "notas = '" + txtNotas.getText() + "'"
                     + "WHERE cheque = '" + iCheque + "'";
@@ -128,7 +128,6 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtCheque = new javax.swing.JTextField();
         txtFechaAbono = new javax.swing.JTextField();
-        txtEstado = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
         txtAbono = new javax.swing.JTextField();
         txtFechaReg = new javax.swing.JTextField();
@@ -138,6 +137,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtNotas = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        cboxEstado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -203,6 +203,8 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
             }
         });
 
+        cboxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NO PAGADO", "PAGADO" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -239,18 +241,17 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtAbono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFechaReg, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCheque, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFechaAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCostoPro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtMonto, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(txtAbono, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(txtFechaReg, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(txtFactura, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(txtCheque, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(txtFechaAbono, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(txtCostoPro, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                            .addComponent(cboxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(45, 45, 45)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(62, Short.MAX_VALUE))
@@ -294,11 +295,11 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -372,6 +373,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cboxEstado;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -390,7 +392,6 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     private javax.swing.JTextField txtAbono;
     private javax.swing.JTextField txtCheque;
     private javax.swing.JTextField txtCostoPro;
-    private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtFactura;
     private javax.swing.JTextField txtFechaAbono;
     private javax.swing.JTextField txtFechaReg;
