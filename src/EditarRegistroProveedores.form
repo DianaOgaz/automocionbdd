@@ -89,19 +89,17 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                  <Component id="txtMonto" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
-                                  <Component id="txtAbono" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="txtEstado" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
-                              <Component id="txtTotal" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
-                              <Component id="txtFechaReg" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
-                              <Component id="txtFactura" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
-                              <Component id="txtCheque" min="-2" pref="209" max="-2" attributes="0"/>
-                              <Component id="txtFechaAbono" min="-2" pref="209" max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
-                              <Component id="txtCostoPro" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="txtMonto" alignment="1" pref="209" max="32767" attributes="0"/>
+                              <Component id="txtAbono" alignment="1" pref="209" max="32767" attributes="0"/>
+                              <Component id="txtTotal" alignment="1" pref="209" max="32767" attributes="0"/>
+                              <Component id="txtFechaReg" alignment="1" pref="209" max="32767" attributes="0"/>
+                              <Component id="txtFactura" alignment="1" pref="209" max="32767" attributes="0"/>
+                              <Component id="txtCheque" pref="209" max="32767" attributes="0"/>
+                              <Component id="txtFechaAbono" pref="209" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" alignment="1" pref="209" max="32767" attributes="0"/>
+                              <Component id="txtCostoPro" alignment="1" pref="209" max="32767" attributes="0"/>
+                              <Component id="cboxEstado" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" pref="112" max="-2" attributes="0"/>
@@ -158,12 +156,12 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtEstado" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboxEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -295,8 +293,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtFechaAbono">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtEstado">
-        </Component>
         <Component class="javax.swing.JTextField" name="txtTotal">
         </Component>
         <Component class="javax.swing.JTextField" name="txtAbono">
@@ -334,6 +330,19 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cboxEstado">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="2">
+                <StringItem index="0" value="NO PAGADO"/>
+                <StringItem index="1" value="PAGADO"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
