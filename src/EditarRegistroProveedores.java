@@ -85,7 +85,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
 
     }
 
-    public void updateTable(String iCheque) { //Actualiza los datos del registro actual itilizando cheque com id y PK
+    public void updateTable(String iCheque) { //Actualiza los datos del registro actual utilizando cheque com id y PK
         try {
             Statement st = con.createStatement();
             String query = "UPDATE " + "`" + lblTitulo.getText() + "`" + " SET "
@@ -96,7 +96,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
                     + "abono = '" + txtAbono.getText() + "'" + ","
                     + "fechaAbono = '" + txtFechaAbono.getText() + "'" + ","
                     + "total = '" + txtTotal.getText() + "'" + ","
-                    + "estado = '" + txtTotal.getText() + "'" + ","
+                    + "estado = '" + cboxEstado.getSelectedItem() + "'" + ","
                     + "costoPro = '" + txtCostoPro.getText() + "'" + ","
                     + "notas = '" + txtNotas.getText() + "'"
                     + "WHERE cheque = '" + iCheque + "'";
@@ -164,7 +164,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         jLabel5.setToolTipText("");
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jLabel6.setText("Costo de Produccion");
+        jLabel6.setText("Costo de Proyecto");
         jLabel6.setToolTipText("");
 
         jLabel7.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N

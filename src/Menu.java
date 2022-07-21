@@ -36,7 +36,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     public void mostrarDatos() {//Muestra la tabla
-        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
+        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular","correo", "notas"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tMenu.setModel(modelo);
 
@@ -48,7 +48,7 @@ public class Menu extends javax.swing.JFrame {
             rs = st.executeQuery("SELECT * FROM proveedores");
 
             while (rs.next()) {
-                String[] datos = new String[10];
+                String[] datos = new String[11];
                 datos[0] = rs.getString("nombreCorp");
                 datos[1] = rs.getString("estado");
                 datos[2] = rs.getString("calle");
@@ -58,7 +58,8 @@ public class Menu extends javax.swing.JFrame {
                 datos[6] = rs.getString("curp");
                 datos[7] = rs.getString("telefono");
                 datos[8] = rs.getString("celular");
-                datos[9] = rs.getString("notas");
+                datos[9] = rs.getString("correo");
+                datos[10] = rs.getString("notas");
 
                 modelo.addRow(datos);
 
@@ -106,6 +107,7 @@ public class Menu extends javax.swing.JFrame {
         tMenu = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
+        btnNuevo1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -142,6 +144,15 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        btnNuevo1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnNuevo1.setText("Editar Proveedor");
+        btnNuevo1.setActionCommand("");
+        btnNuevo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevo1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -149,26 +160,34 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnNuevo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBorrar)
-                    .addComponent(btnNuevo))
+                    .addComponent(btnNuevo1))
                 .addContainerGap())
         );
 
@@ -208,7 +227,7 @@ public class Menu extends javax.swing.JFrame {
             int columna = 0; //obtiene el nombre
             String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable        
             borrarTablas(iCaptu); //borra las tablas y el registro en proveedores de acuerdo con el nombre
-            System.out.println("SI");
+            
 
         } else if (resp == 1) {//No hacer nada en caso de elegir NO          
         }
@@ -225,6 +244,31 @@ public class Menu extends javax.swing.JFrame {
         Proveedores vProveedores = new Proveedores(iCaptu, "", "");
         vProveedores.setVisible(true);
     }//GEN-LAST:event_tMenuMouseClicked
+
+    private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
+         int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
+       
+
+        String iNombre = (String) tMenu.getValueAt(fila,0);
+        String iEstado = (String) tMenu.getValueAt(fila,1);
+        String iCalle = (String) tMenu.getValueAt(fila,2);
+        String iColonia = (String) tMenu.getValueAt(fila,3);
+        String iCP = (String) tMenu.getValueAt(fila,4);
+        String iRFC = (String) tMenu.getValueAt(fila,5);
+        String iCURP = (String) tMenu.getValueAt(fila,6);
+        String iTelefono = (String) tMenu.getValueAt(fila,7);
+        String iCelular = (String) tMenu.getValueAt(fila,8);
+        String iCorreo = (String) tMenu.getValueAt(fila,9);
+        String iNotas = (String) tMenu.getValueAt(fila, 10);
+        
+        String iNomProv = (String) tMenu.getValueAt(fila,0);//Guarda el nombre del proveedor para la ventana EditarProv
+        
+        System.out.println(iNomProv + "Menu--------------");
+
+        //String iNomProv = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
+        EditarProveedor editProv = new EditarProveedor(this, iNomProv, iNombre, iEstado, iCalle, iColonia, iCP, iRFC, iCURP, iTelefono, iCelular, iCorreo, iNotas);
+        editProv.setVisible(true);
+    }//GEN-LAST:event_btnNuevo1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -262,6 +306,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnNuevo1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
