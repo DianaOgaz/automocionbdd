@@ -70,7 +70,7 @@ public class Proveedores extends javax.swing.JFrame {
                 datos[6] = rs.getString("total");
                 datos[7] = rs.getString("estado");
                 datos[8] = rs.getString("costoPro");
-                datos[9] = rs.getString("total");
+                datos[9] = rs.getString("notas");
 
                 modelo.addRow(datos);
 
@@ -85,9 +85,9 @@ public class Proveedores extends javax.swing.JFrame {
     }
 
     public void total(String iCaptu) {
-        try {
+       /* try {
             Statement st = con.createStatement();
-            String query = "SELECT SUM(total)total FROM " + iCaptu + "";
+            String query = "SELECT SUM(total) total FROM " + iCaptu + "WHERE total = total";
             System.out.println(query);
             st.execute(query);
             
@@ -97,7 +97,7 @@ public class Proveedores extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        */
         String[] columnas = {"total"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tTotal.setModel(modelo);
@@ -107,11 +107,10 @@ public class Proveedores extends javax.swing.JFrame {
 
         try {
             st = con.createStatement();
-            rs = st.executeQuery("SELECT SUM(total)total FROM " + iCaptu + "");
-            
-            
-            
+            rs = st.executeQuery("SELECT SUM(total)total FROM " + iCaptu);
+           
             System.out.println(st.executeQuery(iCaptu));
+            System.out.println(rs + "ESTE");
             while (rs.next()) {
                 String[] datos = new String[0];
                 datos[0] = rs.getString("total");
