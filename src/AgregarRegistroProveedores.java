@@ -22,7 +22,7 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         this.iCaptu = iCaptu;
 
         initComponents();
-        
+
         this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
 
         this.setResizable(true);
@@ -30,7 +30,6 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         this.getContentPane().setBackground(Color.GRAY);
 
         lblTitulo.setText(iCaptu);//coloca el nombre del proveedor en la ventana
-
     }
 
     private AgregarRegistroProveedores() {
@@ -47,7 +46,6 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Fallo conexión a base de datos", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return con;
-
     }
 
     @SuppressWarnings("unchecked")
@@ -310,15 +308,16 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        int iSuma = Integer.valueOf(txtMonto.getText()) - Integer.valueOf(txtAbono.getText());
 
         String cheque = txtCheque.getText();
         String factura = txtFactura.getText();
         String fechaReg = txtFechaReg.getText();
         String monto = txtMonto.getText();
         String abono = txtAbono.getText();
-        String fechaAbono = txtAbono.getText();
-        String total = lblTotal.getText();
-        String estado = (String)cboxEstado.getSelectedItem();
+        String fechaAbono = txtFechaAbono.getText();
+        int total = iSuma;
+        String estado = (String) cboxEstado.getSelectedItem();
         String costoPro = txtCostoPro.getText();
         String notas = txtNotas.getText();
 
@@ -331,9 +330,11 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Cheque duplicado. Ingrese otro cheque", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+
+        this.proveedores.totalSuma(txtCheque.getText());
+        this.proveedores.totalSuma(iCaptu);
         this.proveedores.mostrarProveedor(this.iCaptu); //Llama a proveedores y se lleva a iCaptu para mostrar tabla de proveedor seleccionado
         this.setVisible(false);
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     public static void main(String args[]) {
@@ -358,7 +359,7 @@ public class AgregarRegistroProveedores extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AgregarRegistroProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-   
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AgregarRegistroProveedores().setVisible(true);

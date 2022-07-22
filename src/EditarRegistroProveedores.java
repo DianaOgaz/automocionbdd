@@ -31,7 +31,8 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
 
         this.proveedores = prov;
         this.iCaptu = iCaptu;
-
+        
+        //Variables 
         this.iCheque = iCheque;
         txtCheque.setText(iCheque);
 
@@ -62,16 +63,17 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
         this.iNotas = iNotas;
         txtNotas.setText(iNotas);
 
+        //Establece caracteristicas visuales de la ventan
         this.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);//Cierra la ventana 
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
+        
         lblTitulo.setText(iCaptu); //Muestra el nombre del proveedor en el titulo
 
     }
 
     private EditarRegistroProveedores() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public Connection conexion() {
@@ -83,7 +85,6 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
             System.out.println("Conexion fallida " + ex);
         }
         return con;
-
     }
 
     public void updateTable(String iCheque, int iSuma) { //Actualiza los datos del registro actual utilizando cheque com id y PK
@@ -370,7 +371,7 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         if (txtMonto.getText() == "") {
-
+           
         } else {
             int iSuma = Integer.valueOf(txtMonto.getText()) - Integer.valueOf(txtAbono.getText());
             System.out.println(iSuma + " Suma");
@@ -379,7 +380,8 @@ public class EditarRegistroProveedores extends javax.swing.JFrame {
             this.proveedores.mostrarProveedor(this.iCaptu); //Actualiza la tabla del proveedor con sus registros
             System.out.println(iCaptu);
             this.setVisible(false);
-            this.proveedores.total();
+            
+            this.proveedores.totalSuma(iCaptu);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed

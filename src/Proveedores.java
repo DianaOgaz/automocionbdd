@@ -17,7 +17,7 @@ public class Proveedores extends javax.swing.JFrame {
     public Proveedores(String iCaptu, String iSeleccion, String iCheque) {
         initComponents();//inicializa los componentes, a partir de aqui se codifica
         conexion();
-        total();
+        totalSuma(iCaptu);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
@@ -26,7 +26,7 @@ public class Proveedores extends javax.swing.JFrame {
         //el contructor recibe una variable y se puede compartir solamente con el mismo tipo de dato.
         mostrarProveedor(iCaptu);//Recarga la tabla con la informacion del nombre del proveedor seleccionado
         lblTitulo.setText(iCaptu);//coloca el nombre del proveedor seleccionado
-
+        
     }
 
     private Proveedores() {//Metodo constructor sin parametros
@@ -74,21 +74,18 @@ public class Proveedores extends javax.swing.JFrame {
                 datos[9] = rs.getString("notas");
 
                 modelo.addRow(datos);
-
             }
-
         } catch (SQLException ex) {
             System.out.println("Fallo query de proveedores = " + ex);
             JOptionPane.showMessageDialog(null, "No se encontró tabla " + iCaptu, "ERROR", JOptionPane.ERROR_MESSAGE);
-
         }
 
     }
 
- public double total() {
+    public double totalSuma(String iCaptu) {
         double value = 0.0;
         try {
-           java.sql.PreparedStatement statement = con.prepareStatement("select sum(total) FROM a ");
+            java.sql.PreparedStatement statement = con.prepareStatement("select sum(total) FROM " + iCaptu);
             ResultSet result = statement.executeQuery();
             result.next();
             String sum = result.getString(1);
@@ -100,7 +97,6 @@ public class Proveedores extends javax.swing.JFrame {
             System.out.println(exc.getMessage());
         }
         return value;
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -117,7 +113,6 @@ public class Proveedores extends javax.swing.JFrame {
         cmbox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
-        btnTotal = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -165,8 +160,8 @@ public class Proveedores extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         btnAgegar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -200,13 +195,6 @@ public class Proveedores extends javax.swing.JFrame {
 
         lblTotal.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        btnTotal.setText("Total");
-        btnTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTotalActionPerformed(evt);
-            }
-        });
-
         btnEditar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnEditar.setText("Editar Registro");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -228,20 +216,15 @@ public class Proveedores extends javax.swing.JFrame {
                         .addGap(68, 68, 68)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel1)
+                        .addGap(30, 30, 30)
+                        .addComponent(cmbox, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTotal))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(128, 128, 128)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmbox, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAgegar)))))
+                            .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgegar, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -252,21 +235,19 @@ public class Proveedores extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAgegar)
-                            .addComponent(cmbox, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                        .addComponent(btnAgegar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditar)
-                            .addComponent(btnTotal))
+                        .addComponent(btnEditar)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(btnBorrar)
-                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30))))
+                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1)
+                                .addComponent(cmbox, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26))))
         );
 
         pack();
@@ -276,7 +257,6 @@ public class Proveedores extends javax.swing.JFrame {
 
         AgregarRegistroProveedores registroProv = new AgregarRegistroProveedores(this, lblTitulo.getText());
         registroProv.setVisible(true);
-
     }//GEN-LAST:event_btnAgegarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -299,32 +279,23 @@ public class Proveedores extends javax.swing.JFrame {
     private void tTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tTablaMouseClicked
 
         int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
-        String iCheque = (String) tTabla.getValueAt(fila, 0); //Se declara la variable 
 
-        int columna1 = 1;
-        int columna2 = 2;
-        int columna3 = 3;
-        int columna4 = 4;
-        int columna5 = 5;
-        int columna6 = 6;
-        int columna7 = 7;
-        int columna8 = 8;
-        int columna9 = 9;
-
-        String iFactura = (String) tTabla.getValueAt(fila, columna1);
-        String iFechaReg = (String) tTabla.getValueAt(fila, columna2);
-        String iMonto = (String) tTabla.getValueAt(fila, columna3);
-        String iAbono = (String) tTabla.getValueAt(fila, columna4);
-        String iFechaAbono = (String) tTabla.getValueAt(fila, columna5);
-        String iTotal = (String) tTabla.getValueAt(fila, columna6);
-        String iEstado = (String) tTabla.getValueAt(fila, columna7);
-        String iCostoPro = (String) tTabla.getValueAt(fila, columna8);
-        String iNotas = (String) tTabla.getValueAt(fila, columna9);
+        //Se declaran las variables que guardan los datos
+        String iCheque = (String) tTabla.getValueAt(fila, 0);
+        String iFactura = (String) tTabla.getValueAt(fila, 1);
+        String iFechaReg = (String) tTabla.getValueAt(fila, 2);
+        String iMonto = (String) tTabla.getValueAt(fila, 3);
+        String iAbono = (String) tTabla.getValueAt(fila, 4);
+        String iFechaAbono = (String) tTabla.getValueAt(fila, 5);
+        String iTotal = (String) tTabla.getValueAt(fila, 6);
+        String iEstado = (String) tTabla.getValueAt(fila, 7);
+        String iCostoPro = (String) tTabla.getValueAt(fila, 8);
+        String iNotas = (String) tTabla.getValueAt(fila, 9);
 
         String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
         EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, this, iCheque, iFactura, iFechaReg, iMonto, iAbono, iFechaAbono, iTotal, iEstado, iCostoPro, iNotas);
-        //
-        nvoReg.setVisible(true);
+
+        nvoReg.setVisible(true);//Abre ventana de nuevo registro
     }//GEN-LAST:event_tTablaMouseClicked
 
     private void cmboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmboxActionPerformed
@@ -404,21 +375,12 @@ public class Proveedores extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 System.out.println("Fallo query de proveedores = " + ex);
                 JOptionPane.showMessageDialog(null, "No se encontró tabla " + iCaptu, "ERROR", JOptionPane.ERROR_MESSAGE);
-
             }
 
-        } else if (seleccion == "Mostrar Todo") {
-
+        } else if (seleccion.equals("Mostrar Todo")) {
             mostrarProveedor(iCaptu);
         }
-
-
     }//GEN-LAST:event_cmboxActionPerformed
-
-    private void btnTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalActionPerformed
-        String iCaptu = lblTitulo.getText();
-        //total(iCaptu);
-    }//GEN-LAST:event_btnTotalActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int fila = tTabla.getSelectedRow(); //obtiene el numero de fila seleccionada
@@ -446,7 +408,7 @@ public class Proveedores extends javax.swing.JFrame {
 
         String iCaptu = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
         EditarRegistroProveedores nvoReg = new EditarRegistroProveedores(iCaptu, this, iCheque, iFactura, iFechaReg, iMonto, iAbono, iFechaAbono, iTotal, iEstado, iCostoPro, iNotas);
-        //
+
         nvoReg.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -463,7 +425,6 @@ public class Proveedores extends javax.swing.JFrame {
     private javax.swing.JButton btnAgegar;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnTotal;
     private javax.swing.JComboBox<String> cmbox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
