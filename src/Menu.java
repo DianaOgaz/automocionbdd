@@ -36,7 +36,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     public void mostrarDatos() {//Muestra la tabla
-        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular","correo", "notas"};
+        String[] columnas = {"Nombre", "Edtado", "Calle", "Colonia", "C.P.", "R.F.C.", "C.U.R.P", "Telefonoo", "Celular", "Correo", "Total", "Notas"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tMenu.setModel(modelo);
 
@@ -46,9 +46,11 @@ public class Menu extends javax.swing.JFrame {
         try {
             st = con.createStatement();
             rs = st.executeQuery("SELECT * FROM proveedores");
+            
+                    
 
             while (rs.next()) {
-                String[] datos = new String[11];
+                String[] datos = new String[12];
                 datos[0] = rs.getString("nombreCorp");
                 datos[1] = rs.getString("estado");
                 datos[2] = rs.getString("calle");
@@ -59,17 +61,28 @@ public class Menu extends javax.swing.JFrame {
                 datos[7] = rs.getString("telefono");
                 datos[8] = rs.getString("celular");
                 datos[9] = rs.getString("correo");
-                datos[10] = rs.getString("notas");
+                datos[10] = rs.getString("total");
+                datos[11] = rs.getString("notas");
 
                 modelo.addRow(datos);
-
+                /*
+               //System.out.println(datos[8]);// Esto si jala pero saca los datos de todas las columnas 8
+               //rs.getArray(8);
+               String a = rs.getString("total");
+                System.out.println(a);
+                if (a.equals("800")) {
+                    System.out.println(rs.getString("total"));
+                }
+              */
+               
             }
+             //System.out.println(rs.getArray("calle"));//No jala
+             
 
         } catch (SQLException ex) {
             System.out.println("Fallo query Menu = " + ex);
             JOptionPane.showMessageDialog(null, "No se encontraron proveedores", "ERROR", JOptionPane.ERROR_MESSAGE);
         };
-
     }
 
     public void borrarTablas(String iCaptu) {
@@ -160,21 +173,18 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))))
+                        .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +237,6 @@ public class Menu extends javax.swing.JFrame {
             int columna = 0; //obtiene el nombre
             String iCaptu = (String) tMenu.getValueAt(fila, columna); //Se declara la variable        
             borrarTablas(iCaptu); //borra las tablas y el registro en proveedores de acuerdo con el nombre
-            
 
         } else if (resp == 1) {//No hacer nada en caso de elegir NO          
         }
@@ -246,26 +255,22 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_tMenuMouseClicked
 
     private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
-         int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
-       
+        int fila = tMenu.getSelectedRow(); //obtiene el numero de fila seleccionada
 
-        String iNombre = (String) tMenu.getValueAt(fila,0);
-        String iEstado = (String) tMenu.getValueAt(fila,1);
-        String iCalle = (String) tMenu.getValueAt(fila,2);
-        String iColonia = (String) tMenu.getValueAt(fila,3);
-        String iCP = (String) tMenu.getValueAt(fila,4);
-        String iRFC = (String) tMenu.getValueAt(fila,5);
-        String iCURP = (String) tMenu.getValueAt(fila,6);
-        String iTelefono = (String) tMenu.getValueAt(fila,7);
-        String iCelular = (String) tMenu.getValueAt(fila,8);
-        String iCorreo = (String) tMenu.getValueAt(fila,9);
+        String iNombre = (String) tMenu.getValueAt(fila, 0);
+        String iEstado = (String) tMenu.getValueAt(fila, 1);
+        String iCalle = (String) tMenu.getValueAt(fila, 2);
+        String iColonia = (String) tMenu.getValueAt(fila, 3);
+        String iCP = (String) tMenu.getValueAt(fila, 4);
+        String iRFC = (String) tMenu.getValueAt(fila, 5);
+        String iCURP = (String) tMenu.getValueAt(fila, 6);
+        String iTelefono = (String) tMenu.getValueAt(fila, 7);
+        String iCelular = (String) tMenu.getValueAt(fila, 8);
+        String iCorreo = (String) tMenu.getValueAt(fila, 9);
         String iNotas = (String) tMenu.getValueAt(fila, 10);
-        
-        String iNomProv = (String) tMenu.getValueAt(fila,0);//Guarda el nombre del proveedor para la ventana EditarProv
-        
-        System.out.println(iNomProv + "Menu--------------");
 
-        //String iNomProv = lblTitulo.getText();//Guarda el nombre del proveedor para el registro
+        String iNomProv = (String) tMenu.getValueAt(fila, 0);//Guarda el nombre del proveedor para la ventana EditarProv
+
         EditarProveedor editProv = new EditarProveedor(this, iNomProv, iNombre, iEstado, iCalle, iColonia, iCP, iRFC, iCURP, iTelefono, iCelular, iCorreo, iNotas);
         editProv.setVisible(true);
     }//GEN-LAST:event_btnNuevo1ActionPerformed
