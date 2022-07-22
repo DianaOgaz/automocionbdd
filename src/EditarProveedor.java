@@ -1,4 +1,5 @@
 
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,15 +8,16 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
 
 public class EditarProveedor extends javax.swing.JFrame {
 
     Connection con = conexion(); //conexion con la BDD
     String iNomProv;
     Menu menu;
-    
+
     //Variables para guardar los datos de registros
-    String iNombre; 
+    String iNombre;
     String iEstado;
     String iCalle;
     String iColonia;
@@ -26,51 +28,49 @@ public class EditarProveedor extends javax.swing.JFrame {
     String iCelular;
     String iCorreo;
     String iNotas;
-     
-    
-    public EditarProveedor(Menu menu, String iNomProv, String iNombre, String iEstado, String iCalle, String iColonia, String iCP, String iRFC, String iCURP, String iTelefono, String iCelular,String iCorreo, String iNotas) {
+
+    public EditarProveedor(Menu menu, String iNomProv, String iNombre, String iEstado, String iCalle, String iColonia, String iCP, String iRFC, String iCURP, String iTelefono, String iCelular, String iCorreo, String iNotas) {
         initComponents();
-        
+
         this.menu = menu;
         this.iNomProv = iNomProv;
         System.out.println("Nombre Proveedor " + iNomProv);
-        
+
         this.iNombre = iNombre;
         txtNombre.setText(iNombre);
-        
+
         this.iEstado = iEstado;
         txtEstado.setText(iEstado);
-        
+
         this.iCalle = iCalle;
         txtCalle.setText(iCalle);
-        
+
         this.iColonia = iColonia;
         txtColonia.setText(iColonia);
-        
+
         this.iCP = iCP;
         txtCP.setText(iCP);
-        
+
         this.iRFC = iRFC;
         txtRFC.setText(iRFC);
-        
+
         this.iCURP = iCURP;
         txtCURP.setText(iCURP);
-        
+
         this.iTelefono = iTelefono;
         txtTelefono.setText(iTelefono);
-        
+
         this.iCelular = iCelular;
         txtCelular.setText(iCelular);
-        
+
         this.iCorreo = iCorreo;
         txtCorreo.setText(iCorreo);
-        
+
         this.iNotas = iNotas;
         txtNotas.setText(iNotas);
-        
+
         lblTitulo.setText(iNomProv);
-  
-        
+
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
@@ -92,6 +92,7 @@ public class EditarProveedor extends javax.swing.JFrame {
         }
         return con;
     }
+
     public void updateTable(String iNomProv) { //Actualiza los datos del registro actual utilizando cheque com id y PK
         try {
             Statement st = con.createStatement();
@@ -111,7 +112,11 @@ public class EditarProveedor extends javax.swing.JFrame {
 
             System.out.println(query);
             st.execute(query);
-
+            ResultSet rs = st.executeQuery("SELECT * FROM proveedores"); //Esto no funciona
+            System.out.println(rs.getString("total"));
+            
+            //System.out.println(rs.getArray("total"));
+            
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -250,20 +255,20 @@ public class EditarProveedor extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtCP, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                    .addComponent(txtCURP, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                    .addComponent(txtCalle, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                    .addComponent(txtEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                    .addComponent(txtRFC, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                    .addComponent(txtCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                                    .addComponent(txtCURP)
+                                    .addComponent(txtCalle)
+                                    .addComponent(txtEstado)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtRFC)
+                                    .addComponent(txtCelular)
                                     .addComponent(txtColonia, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                                    .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
-                        .addGap(0, 170, Short.MAX_VALUE))
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.LEADING))))
+                        .addGap(0, 158, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(149, 149, 149)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(45, 45, 45)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -315,7 +320,7 @@ public class EditarProveedor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnGuardar)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,11 +333,17 @@ public class EditarProveedor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -344,7 +355,6 @@ public class EditarProveedor extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

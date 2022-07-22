@@ -7,6 +7,9 @@ import javax.swing.JOptionPane;
 public class prueba {
     Connection con = conexion();
 
+    
+    
+    
     public Connection conexion() { //realiza la conexion de la base de datos
         Connection con = null;
         try {

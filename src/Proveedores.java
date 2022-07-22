@@ -17,6 +17,7 @@ public class Proveedores extends javax.swing.JFrame {
     public Proveedores(String iCaptu, String iSeleccion, String iCheque) {
         initComponents();//inicializa los componentes, a partir de aqui se codifica
         conexion();
+        total();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.GRAY);
@@ -84,45 +85,22 @@ public class Proveedores extends javax.swing.JFrame {
 
     }
 
-    public void total(String iCaptu) {
-       /* try {
-            Statement st = con.createStatement();
-            String query = "SELECT SUM(total) total FROM " + iCaptu + "WHERE total = total";
-            System.out.println(query);
-            st.execute(query);
-            
-            lblTotal.setText(query);
-            
-
-        } catch (SQLException ex) {
-            Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-        String[] columnas = {"total"};
-        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-        tTotal.setModel(modelo);
-
-        Statement st;
-        ResultSet rs;
-
+ public double total() {
+        double value = 0.0;
         try {
-            st = con.createStatement();
-            rs = st.executeQuery("SELECT SUM(total)total FROM " + iCaptu);
-           
-            System.out.println(st.executeQuery(iCaptu));
-            System.out.println(rs + "ESTE");
-            while (rs.next()) {
-                String[] datos = new String[0];
-                datos[0] = rs.getString("total");
+           java.sql.PreparedStatement statement = con.prepareStatement("select sum(total) FROM a ");
+            ResultSet result = statement.executeQuery();
+            result.next();
+            String sum = result.getString(1);
+            System.out.println(sum);
+            value = Double.parseDouble(sum);
+            lblTotal.setText(sum);
 
-                modelo.addRow(datos);
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("Fallo query total = " + ex);
-            JOptionPane.showMessageDialog(null, "No se encontraron totales", "ERROR", JOptionPane.ERROR_MESSAGE);
-        };
-         
+        } catch (Exception exc) {
+            System.out.println(exc.getMessage());
+        }
+        return value;
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -133,8 +111,6 @@ public class Proveedores extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tTabla = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tTotal = new javax.swing.JTable();
         btnAgegar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -170,19 +146,6 @@ public class Proveedores extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tTabla);
 
-        tTotal.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Total"
-            }
-        ));
-        jScrollPane2.setViewportView(tTotal);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -190,10 +153,7 @@ public class Proveedores extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1019, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lblTitulo)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -206,9 +166,7 @@ public class Proveedores extends javax.swing.JFrame {
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         btnAgegar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -271,13 +229,14 @@ public class Proveedores extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTotal))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnTotal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 439, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(72, 72, 72)
+                                .addGap(128, 128, 128)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(cmbox, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -304,9 +263,9 @@ public class Proveedores extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addComponent(btnBorrar))
+                            .addComponent(btnBorrar)
+                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30))))
         );
 
@@ -458,7 +417,7 @@ public class Proveedores extends javax.swing.JFrame {
 
     private void btnTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalActionPerformed
         String iCaptu = lblTitulo.getText();
-        total(iCaptu);
+        //total(iCaptu);
     }//GEN-LAST:event_btnTotalActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -510,10 +469,8 @@ public class Proveedores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tTabla;
-    private javax.swing.JTable tTotal;
     // End of variables declaration//GEN-END:variables
 }
