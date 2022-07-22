@@ -45,7 +45,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
     }
 
     public void actualizarDatos() {
-        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular", "notas"};
+        String[] columnas = {"nombreCorp", "estado", "calle", "colonia", "cp", "rfc", "curp", "telefono", "celular","correo", "notas"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         //tMenu.setModel(modelo);
 
@@ -57,7 +57,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
             rs = st.executeQuery("SELECT * FROM proveedores");
 
             while (rs.next()) {
-                String[] datos = new String[10];
+                String[] datos = new String[11];
                 datos[0] = rs.getString("nombreCorp");
                 datos[1] = rs.getString("estado");
                 datos[2] = rs.getString("calle");
@@ -67,7 +67,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
                 datos[6] = rs.getString("curp");
                 datos[7] = rs.getString("telefono");
                 datos[8] = rs.getString("celular");
-                datos[9] = rs.getString("notas");
+                datos[9] = rs.getString("correo");
+                datos[10] = rs.getString("notas");
 
                 modelo.addRow(datos);
 
@@ -94,7 +95,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
                     + "`" + "total" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "estado" + "`" + "VARCHAR(45) NULL,"
                     + "`" + "costoPro" + "`" + "VARCHAR(45) NULL,"
-                    + "`" + "notas" + "`" + "VARCHAR(45) NULL, PRIMARY KEY (`cheque`))";
+                    + "`" + "correo" + "`" + "VARCHAR(45) NULL,"
+                    + "`" + "notas" + "`" + "VARCHAR(200) NULL, PRIMARY KEY (`cheque`))";
             System.out.println(query);
             st.execute(query);
 
@@ -133,6 +135,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        txtCorreo = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -194,6 +198,10 @@ public class NuevoProveedor extends javax.swing.JFrame {
         jLabel4.setText("Notas");
         jLabel4.setToolTipText("");
 
+        jLabel13.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel13.setText("Correo");
+        jLabel13.setToolTipText("");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -210,7 +218,8 @@ public class NuevoProveedor extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel8)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -228,10 +237,11 @@ public class NuevoProveedor extends javax.swing.JFrame {
                                 .addComponent(txtRFC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtCURP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtCelular, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                                .addComponent(txtCelular, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                         .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))))
+                        .addGap(34, 34, 34))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
@@ -240,14 +250,14 @@ public class NuevoProveedor extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addComponent(jLabel1)
-                        .addGap(32, 32, 32)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtNombre))
@@ -284,10 +294,14 @@ public class NuevoProveedor extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -321,11 +335,12 @@ public class NuevoProveedor extends javax.swing.JFrame {
         String nombreCorp = txtNombre.getText();
         String notas = txtNotas.getText();
         String rfc = txtRFC.getText();
+        String correo = txtCorreo.getText();
         String telefono = txtTelefono.getText();
 
         try {
             Statement st = con.createStatement();
-            String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + notas + "\")";
+            String query = "INSERT INTO proveedores (nombreCorp,estado,calle,colonia,cp,rfc,curp,telefono,celular,correo,notas) VALUES (\"" + nombreCorp + "\",\"" + estado + "\",\"" + calle + "\",\"" + colonia + "\",\"" + cp + "\",\"" + rfc + "\", \"" + curp + "\",\"" + telefono + "\",\"" + celular + "\",\"" + correo + "\",\"" + notas + "\")";
             st.execute(query);
 
             crearTabla();//Crea la tabla en la base de datos
@@ -335,10 +350,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(NuevoProveedor.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Nombre duplicado. Cambie nombre", "ERROR", JOptionPane.ERROR_MESSAGE);
-
         }
-
-
     }//GEN-LAST:event_btnCrearActionPerformed
 
     public static void main(String args[]) {
@@ -356,6 +368,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -370,6 +383,7 @@ public class NuevoProveedor extends javax.swing.JFrame {
     private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtColonia;
+    private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextArea txtNotas;

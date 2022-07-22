@@ -46,9 +46,7 @@ public class Menu extends javax.swing.JFrame {
         try {
             st = con.createStatement();
             rs = st.executeQuery("SELECT * FROM proveedores");
-            
-                    
-
+  
             while (rs.next()) {
                 String[] datos = new String[12];
                 datos[0] = rs.getString("nombreCorp");
@@ -65,20 +63,9 @@ public class Menu extends javax.swing.JFrame {
                 datos[11] = rs.getString("notas");
 
                 modelo.addRow(datos);
-                /*
-               //System.out.println(datos[8]);// Esto si jala pero saca los datos de todas las columnas 8
-               //rs.getArray(8);
-               String a = rs.getString("total");
-                System.out.println(a);
-                if (a.equals("800")) {
-                    System.out.println(rs.getString("total"));
-                }
-              */
                
             }
-             //System.out.println(rs.getArray("calle"));//No jala
-             
-
+      
         } catch (SQLException ex) {
             System.out.println("Fallo query Menu = " + ex);
             JOptionPane.showMessageDialog(null, "No se encontraron proveedores", "ERROR", JOptionPane.ERROR_MESSAGE);

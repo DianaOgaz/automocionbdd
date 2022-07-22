@@ -64,30 +64,18 @@ public class pruebaj extends javax.swing.JFrame {
 
                 modelo.addRow(datos);
 
-                //System.out.println(datos[10]);// Esto si jala pero saca los datos de todas las columnas 8
-                /*if (datos[10] != null) {
-                    //System.out.println("ashu");
-                    rs = st.executeQuery("SELECT SUM(total)total FROM proveedores");
-                    int a = rs.getInt("total");
-                    System.out.println(a);
-                }*/
-                //rs.getArray(8);
-                //rs = st.executeQuery("SELECT total FROM proveedores");
-
             }
-            //System.out.println(rs.getArray("calle"));//No jala
 
         } catch (SQLException ex) {
             System.out.println("Fallo query Menu = " + ex);
             JOptionPane.showMessageDialog(null, "No se encontraron proveedores", "ERROR", JOptionPane.ERROR_MESSAGE);
         };
-
     }
 
-    public double data() {
+    public double data() { //Método para sumar los totales de la tabla proveedores, agregar iCaptu 
         double value = 0.0;
         try {
-           PreparedStatement statement = con.prepareStatement("select sum(total) FROM proveedores ");
+           PreparedStatement statement = con.prepareStatement("select sum(total) FROM proveedores "); //se crea el query que suma los totales
             ResultSet result = statement.executeQuery();
             result.next();
             String sum = result.getString(1);
